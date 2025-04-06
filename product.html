@@ -817,8 +817,8 @@
             1: {
                 name: "Food Bowl 1",
                 image: "https://via.placeholder.com/500x450?text=Food+Bowl+1",
-                price: 10,
-                originalPrice: 15,
+                price: 100,
+                originalPrice: 150,
                 discount: "33% off",
                 description: "A vibrant mix of avocado, tomatoes, and chickpeas.",
                 ingredients: ["Avocado", "Tomatoes", "Chickpeas", "Olive Oil", "Flax Seeds"],
@@ -840,8 +840,8 @@
             2: {
                 name: "Food Bowl 2",
                 image: "https://via.placeholder.com/500x450?text=Food+Bowl+2",
-                price: 12,
-                originalPrice: 18,
+                price: 120,
+                originalPrice: 180,
                 discount: "33% off",
                 description: "Grilled paneer with fresh greens.",
                 ingredients: ["Paneer", "Lettuce", "Bell Peppers", "Olive Oil"],
@@ -852,8 +852,8 @@
             3: {
                 name: "Food Bowl 3",
                 image: "https://via.placeholder.com/500x450?text=Food+Bowl+3",
-                price: 8,
-                originalPrice: 12,
+                price: 80,
+                originalPrice: 120,
                 discount: "33% off",
                 description: "Whole wheat wrap with grilled tofu.",
                 ingredients: ["Tofu", "Wheat Wrap", "Carrots", "Broccoli"],
@@ -864,8 +864,8 @@
             4: {
                 name: "Food Bowl 4",
                 image: "https://via.placeholder.com/500x450?text=Food+Bowl+4",
-                price: 15,
-                originalPrice: 20,
+                price: 150,
+                originalPrice: 200,
                 discount: "25% off",
                 description: "Zesty hummus with fresh veggies.",
                 ingredients: ["Hummus", "Cucumber", "Tomatoes", "Spinach"],
@@ -885,8 +885,8 @@
             document.getElementById('product-image').src = product.image;
             document.getElementById('product-title').textContent = product.name;
             document.getElementById('product-description').textContent = product.description;
-            document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}`;
-            document.getElementById('original-price').textContent = `$${product.originalPrice.toFixed(2)}`;
+            document.getElementById('product-price').textContent = `${product.price.toFixed(2)}`;
+            document.getElementById('original-price').textContent = `${product.originalPrice.toFixed(2)}`;
             document.getElementById('discount').textContent = product.discount;
 
             const ingredientsList = document.getElementById('product-ingredients');
@@ -986,8 +986,8 @@
             document.getElementById('modal-image').src = product.image;
             document.getElementById('modal-title').textContent = product.name;
             document.getElementById('modal-description').textContent = product.description;
-            document.getElementById('modal-price').textContent = `$${product.price.toFixed(2)}`;
-            document.getElementById('modal-original-price').textContent = `$${product.originalPrice.toFixed(2)}`;
+            document.getElementById('modal-price').textContent = `${product.price.toFixed(2)}`;
+            document.getElementById('modal-original-price').textContent = `${product.originalPrice.toFixed(2)}`;
             document.getElementById('modal-discount').textContent = product.discount;
             document.getElementById('modal').style.display = 'flex';
             gsap.from(".modal-content", { scale: 0.8, opacity: 0, duration: 0.5 });
