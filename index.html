@@ -1,0 +1,1426 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriFood</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <style>
+        /* CSS Variables for Color Consistency */
+        :root {
+            --yellow: #FFD700;
+            --purple: #800080;
+            --orange: #FFA500;
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray: #808080;
+            --light-gray: #D3D3D3;
+            --green: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--white);
+            color: var(--black);
+        }
+
+        /* Header Styling */
+        header {
+            background-color: var(--white);
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: center;
+        }
+
+        header .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        header .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        header .logo h1 {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .sign-in-cart {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .sign-in {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .tagline {
+            padding: 20px;
+        }
+
+        .tagline h2 {
+            color: var(--yellow);
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .tagline p {
+            color: var(--gray);
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .menu-button, .order-now {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .menu-button:hover, .order-now:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+        }
+
+        /* Hero Image */
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        /* Order for Your Partner Section */
+        .order-partner {
+            background-color: var(--yellow);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .order-content h3 {
+            font-size: 1.5em;
+            color: var(--black);
+        }
+
+        .order-content input {
+            padding: 10px;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        /* Products Section */
+        .hero-products, .nutritious-bowl, .exclusive-offers, .customer-reviews {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .hero-products h2 { color: var(--purple); }
+        .nutritious-bowl h2 { color: var(--purple); }
+        .exclusive-offers h2 { color: var(--orange); }
+        .customer-reviews h2 { color: var(--black); }
+
+        .product-cards, .offer-cards, .review-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .product-card, .offer-card, .review-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .product-card img, .offer-card img, .nutritious-bowl img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .product-card .details span {
+            display: inline-block;
+            background-color: var(--green);
+            color: var(--white);
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .nutritious-bowl .nutrition {
+            display: inline-block;
+            text-align: left;
+            padding: 10px;
+            border: 1px solid var(--purple);
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .review-card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-top: 1px solid var(--gray);
+        }
+
+        footer .column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        footer .logo img {
+            width: 30px;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .social-media img {
+            width: 20px;
+            height: 20px;
+        }
+
+        footer a {
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--yellow);
+        }
+
+        /* Firecracker Animation */
+        .firecracker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--orange);
+            border-radius: 50%;
+            animation: explode 0.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul { flex-direction: column; gap: 10px; }
+            .sign-in-cart { position: static; margin-top: 10px; }
+            .order-content { flex-direction: column; }
+            .nutritious-bowl .nutrition { display: block; }
+            footer { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" alt="NutriFood Logo">
+            <h1>NutriFood</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#plans">Plans</a></li>
+            </ul>
+        </nav>
+        <div class="sign-in-cart">
+            <button class="sign-in">Sign In</button>
+            <div class="cart">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=24&q=80" alt="Cart">
+            </div>
+        </div>
+        <div class="tagline">
+            <h2>Eat Clean. Live Better.</h2>
+            <p>Enjoy clean eating without compromising on taste or convenience. Designed to keep you energized, satisfied, and healthy every day.</p>
+            <button class="menu-button">Menu</button>
+        </div>
+    </header>
+
+    <section class="hero-image">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Healthy Food Items">
+    </section>
+
+    <section class="order-partner">
+        <div class="order-content">
+            <h3>Order for Your Partner</h3>
+            <button class="menu-button" onclick="triggerFirecrackers()">Order Now</button>
+            <input type="text" placeholder="Type a message for your Partner">
+        </div>
+    </section>
+
+    <section class="hero-products">
+        <h2>Our Hero Products</h2>
+        <div class="product-cards">
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 1">
+                <h3>Tossed in Light Olive Oil</h3>
+                <p>Sprinkled with flax seeds</p>
+                <div class="details">
+                    <span>Price: $10</span>
+                    <span>Info: Couscous, Olive Oil, Lemon</span>
+                    <span>Calories: 300</span>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 2">
+                <h3>Grilled Paneer Cubes</h3>
+                <p>A heartening bowl</p>
+                <div class="details">
+                    <span>Price: $12</span>
+                    <span>Info: Paneer, Tomatoes, Greens</span>
+                    <span>Calories: 350</span>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1565299624946-baccd305181c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 3">
+                <h3>Soft Wheat Wrap</h3>
+                <p>Filled with grilled tofu</p>
+                <div class="details">
+                    <span>Price: $8</span>
+                    <span>Info: Tofu, Carrots, Broccoli</span>
+                    <span>Calories: 250</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="nutritious-bowl">
+        <h2>Nutritious Food Bowl</h2>
+        <div class="nutrition">
+            <p>Calories: 400 kcal</p>
+            <p>Carbohydrates: 30g</p>
+            <p>Protein: 25g</p>
+            <p>Fat: 15g</p>
+            <p>Cholesterol: 100mg</p>
+        </div>
+        <p>A hearty bowl with grilled chicken breast, cooked quinoa, roasted vegetables, and lemon herb dressing.</p>
+        <img src="https://images.unsplash.com/photo-1511690656952-34372b35f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Nutritious Food Bowl">
+        <button class="order-now">Order Now</button>
+    </section>
+
+    <section class="exclusive-offers">
+        <h2>Exclusive Offers for You</h2>
+        <div class="offer-cards">
+            <div class="offer-card">
+                <img src="https://images.unsplash.com/photo-1551189860-2d27a8eb7a2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 4">
+                <h3>Zesty Hummus Spread</h3>
+                <p>Light, filling, and perfect on the go!</p>
+            </div>
+            <div class="offer-card">
+                <img src="https://images.unsplash.com/photo-1505576391880-b3f9d713dc4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 5">
+                <h3>Sweet Corn Yogurt</h3>
+                <p>With a light turmeric yogurt dressing</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="customer-reviews">
+        <h2>Our Customer Reviews</h2>
+        <div class="review-cards">
+            <div class="review-card">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Reviewer 1">
+                <p>"Perfect for my busy schedule."</p>
+                <p><em>- Maria, Working Professional</em></p>
+            </div>
+            <div class="review-card">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Reviewer 2">
+                <p>"Very convenient and surprisingly delicious."</p>
+                <p><em>- Chandan, Professional</em></p>
+            </div>
+            <div class="review-card">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Reviewer 3">
+                <p>"Affordable, fresh, and always on time."</p>
+                <p><em>- Siddh, Student</em></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="column logo">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=30&q=80" alt="NutriFood Logo">
+            <h3>NutriFood</h3>
+            <div class="social-media">
+                <a href="https://facebook.com"><img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=20&q=80" alt="Facebook"></a>
+                <a href="https://twitter.com"><img src="https://images.unsplash.com/photo-1611162617213-7d15d3e90f72?ixlib=rb-4.0.3&auto=format&fit=crop&w=20&q=80" alt="Twitter"></a>
+                <a href="https://instagram.com"><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&auto=format&fit=crop&w=20&q=80" alt="Instagram"></a>
+            </div>
+        </div>
+        <div class="column">
+            <h3>Location</h3>
+            <p>Hyderabad</p>
+            <p>Vizag</p>
+            <p>Bengaluru</p>
+        </div>
+        <div class="column">
+            <h3>Contact Us</h3>
+            <p>Phone: +9122222222</p>
+            <p>Email: nutrifood@gmail.com</p>
+            <p><a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms & Conditions</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Firecracker Animation
+        function triggerFirecrackers() {
+            const orderSection = document.querySelector('.order-partner');
+            for (let i = 0; i < 10; i++) {
+                const firecracker = document.createElement('div');
+                firecracker.classList.add('firecracker');
+                firecracker.style.left = `${Math.random() * 100}%`;
+                firecracker.style.top = `${Math.random() * 100}%`;
+                firecracker.style.backgroundColor = ['red', 'yellow', 'blue'][Math.floor(Math.random() * 3)];
+                orderSection.appendChild(firecracker);
+                setTimeout(() => firecracker.remove(), 500);
+            }
+            alert('Order placed for your partner!');
+        }
+
+        // GSAP Animations
+        gsap.from('.hero-image img', { opacity: 0, duration: 1, delay: 0.5 });
+        gsap.from('.product-card', { opacity: 0, y: 50, duration: 1, stagger: 0.2 });
+        gsap.from('.nutritious-bowl img', { opacity: 0, duration: 1, delay: 0.5 });
+        gsap.from('.offer-card', { opacity: 0, y: 50, duration: 1, stagger: 0.2 });
+        gsap.from('.review-card', { opacity: 0, y: 50, duration: 1, stagger: 0.2 });
+
+        // Button Hover Effects
+        const buttons = document.querySelectorAll('.menu-button, .order-now, .sign-in');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', () => gsap.to(button, { scale: 1.1, duration: 0.2 }));
+            button.addEventListener('mouseleave', () => gsap.to(button, { scale: 1, duration: 0.2 }));
+        });
+
+        // Order Now Functionality
+        document.querySelector('.order-now').addEventListener('click', () => {
+            alert('Order placed successfully!');
+        });
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriFood - Healthy Eating Made Simple</title>
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* CSS Variables for Color Consistency */
+        :root {
+            --yellow: #FFD700;    /* Primary accent color */
+            --purple: #800080;    /* Used for headings */
+            --orange: #FFA500;    /* Used for offers */
+            --black: #000000;     /* Text and button color */
+            --white: #FFFFFF;     /* Background color */
+            --gray: #808080;      /* Secondary text color */
+            --light-gray: #D3D3D3; /* Light background */
+            --green: #4CAF50;     /* Button and tag color */
+            --red: #FF0000;       /* Heart icon color */
+            --blue: #0000FF;      /* Additional color */
+        }
+
+        /* Global Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease-in-out;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--white);
+            color: var(--black);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: var(--white);
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: center;
+            z-index: 100;
+        }
+        header .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        header .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        header .logo img:hover {
+            transform: rotate(360deg);
+        }
+        header .logo h1 {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--black);
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        nav a {
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s ease, color 0.3s ease;
+        }
+        nav a:hover {
+            border-bottom: 2px solid var(--yellow);
+            color: var(--yellow);
+        }
+        .sign-in-cart {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .sign-in {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .sign-in:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+            transform: scale(1.05);
+        }
+        .cart img {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .cart img:hover {
+            transform: scale(1.2);
+        }
+        .tagline {
+            padding: 20px;
+            background-color: var(--white);
+        }
+        .tagline h2 {
+            color: var(--yellow);
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: fadeIn 1s ease-in;
+        }
+        .tagline p {
+            color: var(--gray);
+            font-size: 1.2em;
+            margin: 10px 0;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .menu-button {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            display: block;
+            margin: 15px auto;
+            transition: all 0.3s ease;
+        }
+        .menu-button:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+            transform: scale(1.05);
+        }
+
+        /* Star Decoration Animations */
+        .star-decoration {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url('https://www.clipartmax.com/png/middle/106-1065373_star-clipart-png-transparent-background-star-icon-png.png') no-repeat center;
+            background-size: contain;
+            animation: twinkle 2s infinite alternate;
+            z-index: 10;
+        }
+        .star-left { top: 10px; left: 10px; }
+        .star-right { top: 10px; right: 10px; }
+        @keyframes twinkle {
+            0% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.5; transform: scale(1); }
+        }
+
+        /* Hero Video Section */
+        .hero-video {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Full viewport height */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+        }
+        .hero-video video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures video covers the area */
+            z-index: -1; /* Places video behind text */
+        }
+        .hero-video .overlay-text {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+            border-radius: 10px;
+        }
+        .hero-video .overlay-text h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .hero-video .overlay-text p {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        /* Order for Your Partner Section */
+        .order-partner {
+            background-color: var(--yellow);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .order-partner .love-animation {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            color: var(--red);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.2); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+        .order-partner h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+        .order-partner p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: var(--black);
+        }
+        .order-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .order-content input {
+            padding: 10px;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            width: 200px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        .order-content input:focus {
+            border-color: var(--purple);
+            outline: none;
+        }
+
+        /* Food Bowl Section */
+        .food-bowl {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: var(--white);
+        }
+        .food-bowl h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--purple);
+        }
+        .food-bowl .food-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .food-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .food-card:hover {
+            transform: scale(1.05);
+        }
+        .food-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: opacity 0.3s ease;
+        }
+        .food-card img:hover {
+            opacity: 0.9;
+        }
+        .food-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .food-card p {
+            font-size: 1em;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        /* Nutrition Bowl Section */
+        .nutrition-bowl {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: var(--light-gray);
+        }
+        .nutrition-bowl h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--purple);
+        }
+        .nutrition-bowl .nutrition-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+        .nutrition-bowl .nutrition-card:hover {
+            transform: scale(1.05);
+        }
+        .nutrition-bowl .nutrition-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .nutrition-bowl .nutrition-details {
+            display: inline-block;
+            text-align: left;
+            padding: 10px;
+            border: 1px solid var(--purple);
+            border-radius: 5px;
+            margin-bottom: 15px;
+            background-color: var(--white);
+        }
+        .nutrition-bowl .nutrition-details p {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+        .nutrition-bowl .order-now {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        .nutrition-bowl .order-now:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+            transform: scale(1.05);
+        }
+
+        /* Hero Products Section */
+        .hero-products {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: var(--white);
+        }
+        .hero-products h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--purple);
+        }
+        .product-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .product-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .product-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .product-card p {
+            font-size: 1em;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        .product-card .details span {
+            display: inline-block;
+            background-color: var(--green);
+            color: var(--white);
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        /* Exclusive Offers Section */
+        .exclusive-offers {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: var(--light-gray);
+        }
+        .exclusive-offers h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--orange);
+        }
+        .offer-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .offer-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .offer-card:hover {
+            transform: scale(1.05);
+        }
+        .offer-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .offer-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .offer-card p {
+            font-size: 1em;
+            color: var(--gray);
+        }
+
+        /* Customer Reviews Section */
+        .customer-reviews {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: var(--white);
+        }
+        .customer-reviews h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--black);
+        }
+        .review-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .review-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .review-card:hover {
+            transform: scale(1.05);
+        }
+        .review-card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        .review-card img:hover {
+            transform: scale(1.1);
+        }
+        .review-card p {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+        .review-card em {
+            font-size: 0.9em;
+            color: var(--gray);
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: var(--white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-top: 1px solid var(--gray);
+            margin-top: 20px;
+        }
+        footer .column {
+            flex: 1;
+            min-width: 200px;
+            text-align: left;
+        }
+        footer .logo img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        footer h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        footer p {
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        .social-media {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .social-media img {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+        .social-media img:hover {
+            transform: scale(1.2);
+        }
+        footer a {
+            color: var(--black);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: var(--yellow);
+        }
+
+        /* Lightning Animations */
+        .lightning-effect {
+            position: absolute;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background: url('https://cdn-icons-png.flaticon.com/512/1008/1008913.png') no-repeat center;
+            background-size: contain;
+            animation: lightning 3s infinite;
+            z-index: 10;
+        }
+        .top-left { left: 0; }
+        .top-right { right: 0; }
+        @keyframes lightning {
+            0% { opacity: 0; transform: scale(1); }
+            10% { opacity: 1; transform: scale(1.2); }
+            20% { opacity: 0; transform: scale(0.8); }
+            30% { opacity: 1; transform: scale(1.5); }
+            40% { opacity: 0; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+
+        /* Firecracker Animation */
+        .firecracker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--orange);
+            animation: explode 0.5s ease-out forwards;
+            z-index: 5;
+        }
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul { flex-direction: column; gap: 10px; }
+            .sign-in-cart { position: static; margin-top: 10px; }
+            .order-content { flex-direction: column; }
+            .food-bowl .food-cards, .nutrition-bowl .nutrition-card, .product-cards, .offer-cards, .review-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            .food-card, .nutrition-card, .product-card, .offer-card, .review-card {
+                width: 100%;
+                max-width: 300px;
+            }
+            footer { flex-direction: column; text-align: center; }
+            .lightning-effect { width: 30px; height: 30px; }
+            .hero-video .overlay-text h2 { font-size: 2em; }
+            .hero-video .overlay-text p { font-size: 1.2em; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Lightning Animations in Top Corners -->
+    <div class="lightning-effect top-left"></div>
+    <div class="lightning-effect top-right"></div>
+
+    <!-- Star Decorations -->
+    <div class="star-decoration star-left"></div>
+    <div class="star-decoration star-right"></div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" alt="NutriFood Logo">
+            <h1>NutriFood</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#plans">Plans</a></li>
+            </ul>
+        </nav>
+        <div class="sign-in-cart">
+            <button class="sign-in">Sign In</button>
+            <div class="cart">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=24&q=80" alt="Cart">
+            </div>
+        </div>
+        <div class="tagline">
+            <h2>Eat Clean. Live Better.</h2>
+            <p>Enjoy clean eating without compromising on taste or convenience. Designed to keep you energized, satisfied, and healthy every day.</p>
+            <button class="menu-button">Menu</button>
+        </div>
+    </header>
+
+    <!-- Hero Video Section with Overlay Text -->
+    <section class="hero-video">
+        <video autoplay loop muted>
+            <!-- <source src="https://videos.pexels.com/video-files/3194789/3194789-hd_1920_1080_25fps.mp4" type="video/mp4"> -->
+            <source src="videos/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <!-- <div class="overlay-text">
+            <h2>Discover Healthy Living</h2>
+            <p>Fact: A balanced diet can boost your energy by 30% daily!</p>
+            <p>Shop NutriFood for chef-crafted meals packed with nutrients.</p>
+            <p>Special Offer: Get 20% off your first order today!</p>
+        </div> -->
+    </section>
+
+    <!-- Order for Your Partner Section -->
+    <section class="order-partner">
+        <div class="love-animation"><i class="fas fa-heart"></i></div>
+        <div class="order-content">
+            <h2>Order for Your Partner</h2>
+            <p>Show some love with a healthy meal!</p>
+            <button class="menu-button" onclick="triggerFirecrackers()">Order Now</button>
+            <input type="text" placeholder="Type a message for your Partner">
+        </div>
+    </section>
+
+    <!-- Food Bowl Section -->
+    <section class="food-bowl">
+        <h2>Food Bowl</h2>
+        <div class="food-cards">
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 1">
+                <h3>Tossed in Light Olive Oil</h3>
+                <p>A vibrant mix of avocado, tomatoes, and chickpeas.</p>
+            </div>
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 2">
+                <h3>Grilled Paneer Cubes</h3>
+                <p>Healthy bowl with paneer, greens, and tomatoes.</p>
+            </div>
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1565299624946-baccd305181c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 3">
+                <h3>Soft Wheat Wrap</h3>
+                <p>Filled with grilled tofu and fresh veggies.</p>
+            </div>
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1505576391880-b3f9d713dc4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 4">
+                <h3>Quinoa Delight</h3>
+                <p>Nutritious quinoa with mixed vegetables.</p>
+            </div>
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1551189860-2d27a8eb7a2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 5">
+                <h3>Roasted Veggie Bowl</h3>
+                <p>Flavorful roasted vegetables with herbs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrition Bowl Section -->
+    <section class="nutrition-bowl">
+        <h2>Nutrition Bowl</h2>
+        <div class="nutrition-card">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Nutrition Bowl">
+            <h3>Grilled Chicken Quinoa Bowl</h3>
+            <p>A hearty bowl with grilled chicken, quinoa, and veggies.</p>
+            <div class="nutrition-details">
+                <p>Calories: 400 kcal</p>
+                <p>Carbohydrates: 30g</p>
+                <p>Protein: 25g</p>
+                <p>Fat: 15g</p>
+                <p>Cholesterol: 100mg</p>
+            </div>
+            <button class="order-now">Order Now</button>
+        </div>
+    </section>
+
+    <!-- Hero Products Section -->
+    <section class="hero-products">
+        <h2>Our Hero Products</h2>
+        <div class="product-cards">
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 1">
+                <h3>Tossed in Light Olive Oil</h3>
+                <p>Sprinkled with flax seeds</p>
+                <div class="details">
+                    <span>Price: $10</span>
+                    <span>Info: Couscous, Olive Oil, Lemon</span>
+                    <span>Calories: 300</span>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 2">
+                <h3>Grilled Paneer Cubes</h3>
+                <p>A heartening bowl</p>
+                <div class="details">
+                    <span>Price: $12</span>
+                    <span>Info: Paneer, Tomatoes, Greens</span>
+                    <span>Calories: 350</span>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1565299624946-baccd305181c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 3">
+                <h3>Soft Wheat Wrap</h3>
+                <p>Filled with grilled tofu</p>
+                <div class="details">
+                    <span>Price: $8</span>
+                    <span>Info: Tofu, Carrots, Broccoli</span>
+                    <span>Calories: 250</span>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1505576391880-b3f9d713dc4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 4">
+                <h3>Spicy Lentil Bowl</h3>
+                <p>Rich in flavor and protein</p>
+                <div class="details">
+                    <span>Price: $9</span>
+                    <span>Info: Lentils, Spices, Veggies</span>
+                    <span>Calories: 280</span>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1551189860-2d27a8eb7a2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 5">
+                <h3>Grilled Salmon Bowl</h3>
+                <p>Omega-3 packed goodness</p>
+                <div class="details">
+                    <span>Price: $14</span>
+                    <span>Info: Salmon, Quinoa, Greens</span>
+                    <span>Calories: 400</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exclusive Offers Section -->
+    <section class="exclusive-offers">
+        <h2>Exclusive Offers for You</h2>
+        <div class="offer-cards">
+            <div class="offer-card">
+                <img src="https://images.unsplash.com/photo-1551189860-2d27a8eb7a2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 4">
+                <h3>Zesty Hummus Spread</h3>
+                <p>Light, filling, and perfect on the go!</p>
+            </div>
+            <div class="offer-card">
+                <img src="https://images.unsplash.com/photo-1505576391880-b3f9d713dc4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 5">
+                <h3>Sweet Corn Yogurt</h3>
+                <p>With a light turmeric yogurt dressing</p>
+            </div>
+            <div class="offer-card">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Food Bowl 6">
+                <h3>Veggie Delight</h3>
+                <p>Fresh and crunchy veggies</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews Section -->
+    <section class="customer-reviews">
+        <h2>Our Customer Reviews</h2>
+        <div class="review-cards">
+            <div class="review-card">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Reviewer 1">
+                <p>"Perfect for my busy schedule."</p>
+                <p><em>- Maria, Working Professional</em></p>
+            </div>
+            <div class="review-card">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Reviewer 2">
+                <p>"Very convenient and surprisingly delicious."</p>
+                <p><em>- Chandan, Professional</em></p>
+            </div>
+            <div class="review-card">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Reviewer 3">
+                <p>"Affordable, fresh, and always on time."</p>
+                <p><em>- Siddh, Student</em></p>
+            </div>
+            <div class="review-card">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Reviewer 4">
+                <p>"Healthy and tasty meals."</p>
+                <p><em>- Priya, Fitness Enthusiast</em></p>
+            </div>
+            <div class="review-card">
+                <img src="https://images.unsplash.com/photo-1565299624946-baccd305181c?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Reviewer 5">
+                <p>"Love the variety and freshness."</p>
+                <p><em>- Ravi, Business Owner</em></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="column logo">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=30&q=80" alt="NutriFood Logo">
+            <h3>NutriFood</h3>
+            <div class="social-media">
+                <a href="https://facebook.com"><img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?ixlib=rb-4.0.3&auto=format&fit=crop&w=20&q=80" alt="Facebook"></a>
+                <a href="https://twitter.com"><img src="https://images.unsplash.com/photo-1611162617213-7d15d3e90f72?ixlib=rb-4.0.3&auto=format&fit=crop&w=20&q=80" alt="Twitter"></a>
+                <a href="https://instagram.com"><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&auto=format&fit=crop&w=20&q=80" alt="Instagram"></a>
+            </div>
+        </div>
+        <div class="column">
+            <h3>Location</h3>
+            <p>Hyderabad</p>
+            <p>Vizag</p>
+            <p>Bengaluru</p>
+            <p>Chennai</p>
+            <p>Mumbai</p>
+        </div>
+        <div class="column">
+            <h3>Contact Us</h3>
+            <p>Phone: +9122222222</p>
+            <p>Email: nutrifood@gmail.com</p>
+            <p><a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms & Conditions</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Firecracker Animation Function
+        function triggerFirecrackers() {
+            const orderSection = document.querySelector('.order-partner');
+            for (let i = 0; i < 10; i++) {
+                const firecracker = document.createElement('div');
+                firecracker.classList.add('firecracker');
+                firecracker.style.left = `${Math.random() * 100}%`;
+                firecracker.style.top = `${Math.random() * 100}%`;
+                firecracker.style.backgroundColor = ['red', 'yellow', 'blue'][Math.floor(Math.random() * 3)];
+                orderSection.appendChild(firecracker);
+                setTimeout(() => firecracker.remove(), 500);
+            }
+            alert('Order placed for your partner!');
+        }
+
+        // GSAP Animations for Hero Video Text
+        gsap.from('.hero-video .overlay-text h2', { opacity: 0, y: -50, duration: 1, delay: 0.5 });
+        gsap.from('.hero-video .overlay-text p', { opacity: 0, duration: 1, delay: 1, stagger: 0.3 });
+        
+        // GSAP Animations for Other Sections
+        gsap.from('.food-card', { opacity: 0, y: 50, duration: 1, stagger: 0.2 });
+        gsap.from('.nutrition-bowl img', { opacity: 0, duration: 1, delay: 0.5 });
+        gsap.from('.product-card', { opacity: 0, y: 50, duration: 1, stagger: 0.2 });
+        gsap.from('.offer-card', { opacity: 0, y: 50, duration: 1, stagger: 0.2 });
+        gsap.from('.review-card', { opacity: 0, y: 50, duration: 1, stagger: 0.2 });
+
+        // Button Hover Effects Using GSAP
+        const buttons = document.querySelectorAll('.menu-button, .order-now, .sign-in');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', () => gsap.to(button, { scale: 1.1, duration: 0.2 }));
+            button.addEventListener('mouseleave', () => gsap.to(button, { scale: 1, duration: 0.2 }));
+        });
+
+        // Order Now Button Functionality
+        document.querySelector('.nutrition-bowl .order-now').addEventListener('click', () => {
+            alert('Order placed successfully!');
+        });
+    </script>
+</body>
+</html>

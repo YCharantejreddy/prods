@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NutriFood - Healthy Food Bowls for a Balanced Lifestyle">
+    <meta name="keywords" content="healthy food, NutriFood, food bowls, nutrition">
+    <meta name="author" content="Your Name">
+    <title>NutriFood - Product Page</title>
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- Custom Styles -->
+    <style>
+        /* CSS Variables for Consistent Theming */
+        :root {
+            --yellow: #FFD700;
+            --purple: #800080;
+            --orange: #FFA500;
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray: #808080;
+            --light-gray: #F5F5F5;
+            --green: #4CAF50;
+            --red: #FF0000;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(128, 0, 128, 0.1));
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            padding: 20px 40px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            transition: transform var(--transition);
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+
+        .logo h1 {
+            font-size: 2em;
+            color: var(--purple);
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 1.2em;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .sign-in {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: var(--transition);
+        }
+
+        .sign-in:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+        }
+
+        .cart i {
+            font-size: 28px;
+            color: var(--black);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cart i:hover {
+            color: var(--yellow);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 40px;
+            background-color: var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h2 {
+            font-size: 3.5em;
+            color: var(--yellow);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .menu-button {
+            background-color: var(--green);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: var(--transition);
+        }
+
+        .menu-button:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+            transform: scale(1.05);
+        }
+
+        /* Product Showcase Section */
+        .product-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            padding: 60px 40px;
+            background-color: var(--white);
+            align-items: center;
+        }
+
+        .product-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .product-image img {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition);
+        }
+
+        .product-image img:hover {
+            transform: scale(1.03);
+        }
+
+        .product-details {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .product-details h3 {
+            font-size: 2.8em;
+            color: var(--purple);
+            margin-bottom: 20px;
+        }
+
+        .product-details p {
+            font-size: 1.3em;
+            color: var(--gray);
+            margin-bottom: 25px;
+        }
+
+        .pricing {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #product-price {
+            font-size: 2.2em;
+            color: var(--green);
+        }
+
+        .original {
+            text-decoration: line-through;
+            color: var(--gray);
+            font-size: 1.6em;
+        }
+
+        #discount {
+            color: var(--red);
+            font-size: 1.6em;
+            background-color: rgba(255, 0, 0, 0.1);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .ingredients, .nutrition {
+            margin-bottom: 30px;
+        }
+
+        .ingredients h4, .nutrition h4 {
+            font-size: 1.7em;
+            color: var(--purple);
+            margin-bottom: 15px;
+        }
+
+        .ingredients ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .ingredients li {
+            font-size: 1.2em;
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .ingredients li:before {
+            content: '\f805';
+            font-family: 'Font Awesome 5 Free';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+
+        .nutrition canvas {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .actions {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantity button {
+            background-color: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: var(--transition);
+        }
+
+        .quantity button:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+        }
+
+        .quantity input {
+            width: 60px;
+            text-align: center;
+            padding: 8px;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+
+        .add-to-cart {
+            background-color: var(--green);
+            color: var(--white);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: var(--transition);
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+            transform: scale(1.05);
+        }
+
+        /* Related Products Section */
+        .related-products {
+            padding: 60px 40px;
+            background-color: var(--light-gray);
+        }
+
+        .related-products h3 {
+            text-align: center;
+            font-size: 2.5em;
+            color: var(--purple);
+            margin-bottom: 40px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+            text-align: center;
+            transition: transform var(--transition);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .product-card h4 {
+            font-size: 1.5em;
+            color: var(--black);
+            margin-bottom: 15px;
+        }
+
+        .product-card p {
+            font-size: 1.1em;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .product-card .price {
+            font-size: 1.3em;
+            color: var(--green);
+        }
+
+        /* Customer Reviews Section */
+        .customer-reviews {
+            padding: 60px 40px;
+            background-color: var(--white);
+        }
+
+        .customer-reviews h3 {
+            text-align: center;
+            font-size: 2.5em;
+            color: var(--purple);
+            margin-bottom: 40px;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .review-card {
+            background-color: var(--light-gray);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition);
+        }
+
+        .review-card:hover {
+            transform: scale(1.03);
+        }
+
+        .review-card p {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .review-card em {
+            font-size: 1.1em;
+            color: var(--gray);
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: var(--light-gray);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-content div {
+            min-width: 220px;
+        }
+
+        .footer-content h4 {
+            font-size: 1.4em;
+            color: var(--purple);
+            margin-bottom: 15px;
+        }
+
+        .footer-content p, .footer-content a {
+            font-size: 1.1em;
+            color: var(--black);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-content a:hover {
+            color: var(--yellow);
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-media a {
+            font-size: 1.8em;
+            color: var(--black);
+            transition: var(--transition);
+        }
+
+        .social-media a:hover {
+            color: var(--yellow);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--green);
+            color: var(--white);
+            padding: 15px 30px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1002;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2em;
+            color: var(--black);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--red);
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h3 {
+            font-size: 2em;
+            color: var(--purple);
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 1.2em;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        /* Nutrition Calculator */
+        .nutrition-calculator {
+            margin-top: 30px;
+        }
+
+        .nutrition-calculator h4 {
+            font-size: 1.7em;
+            color: var(--purple);
+            margin-bottom: 15px;
+        }
+
+        .nutrition-calculator input {
+            padding: 8px;
+            width: 100px;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .nutrition-calculator button {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nutrition-calculator button:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+        }
+
+        #calculated-nutrition {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: var(--gray);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                margin-top: 20px;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h2 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1.1em;
+            }
+
+            .product-showcase {
+                padding: 40px 20px;
+                flex-direction: column;
+            }
+
+            .product-details h3 {
+                font-size: 2em;
+            }
+
+            .related-products, .customer-reviews {
+                padding: 40px 20px;
+            }
+
+            .related-products h3, .customer-reviews h3 {
+                font-size: 2em;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="https://via.placeholder.com/50" alt="NutriFood Logo">
+            <h1>NutriFood</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Plans</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <button class="sign-in">Sign In</button>
+            <div class="cart">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Eat Clean. Live Better.</h2>
+        <p>Enjoy clean eating without compromising on taste or convenience.</p>
+        <button class="menu-button">Explore Menu</button>
+    </section>
+
+    <!-- Product Showcase Section -->
+    <section class="product-showcase">
+        <div class="product-image">
+            <img id="product-image" src="https://via.placeholder.com/500x450" alt="Product Image">
+        </div>
+        <div class="product-details">
+            <h3 id="product-title">Loading...</h3>
+            <p id="product-description">Please wait while we load the product details.</p>
+            <div class="pricing">
+                <span id="product-price">$0.00</span>
+                <span id="original-price" class="original">$0.00</span>
+                <span id="discount">0% off</span>
+            </div>
+            <div class="ingredients">
+                <h4>Ingredients</h4>
+                <ul id="product-ingredients"></ul>
+            </div>
+            <div class="nutrition">
+                <h4>Nutritional Information</h4>
+                <canvas id="nutrition-chart"></canvas>
+            </div>
+            <div class="actions">
+                <div class="quantity">
+                    <button onclick="changeQuantity(-1)">-</button>
+                    <input type="number" id="quantity" value="1" min="1">
+                    <button onclick="changeQuantity(1)">+</button>
+                </div>
+                <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+            </div>
+            <div class="nutrition-calculator">
+                <h4>Adjust Serving Size</h4>
+                <input type="number" id="serving-size" value="1" min="1">
+                <button onclick="calculateNutrition()">Calculate</button>
+                <div id="calculated-nutrition"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products Section -->
+    <section class="related-products">
+        <h3>Related Products</h3>
+        <div class="product-grid" id="related-products"></div>
+    </section>
+
+    <!-- Customer Reviews Section -->
+    <section class="customer-reviews">
+        <h3>Customer Reviews</h3>
+        <div class="review-grid" id="customer-reviews"></div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <div class="brand">
+                <h4>NutriFood</h4>
+            </div>
+            <div class="location">
+                <h4>Location</h4>
+                <p>Hyderabad</p>
+                <p>Vizag</p>
+                <p>Bengaluru</p>
+            </div>
+            <div class="contact">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone"></i> +9122222222</p>
+                <p><i class="fas fa-envelope"></i> nutrifood@gmail.com</p>
+            </div>
+            <div class="links">
+                <h4>Learn More</h4>
+                <a href="#">Privacy Policy</a><br>
+                <a href="#">Terms & Conditions</a>
+            </div>
+        </div>
+        <div class="social-media">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Modal for Related Products -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <img id="modal-image" src="" alt="Product Image">
+            <h3 id="modal-title"></h3>
+            <p id="modal-description"></p>
+            <div class="pricing">
+                <span id="modal-price"></span>
+                <span id="modal-original-price" class="original"></span>
+                <span id="modal-discount"></span>
+            </div>
+            <button class="add-to-cart" onclick="addRelatedToCart()">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Product Data
+        const products = {
+            1: {
+                name: "Food Bowl 1",
+                image: "https://via.placeholder.com/500x450?text=Food+Bowl+1",
+                price: 10,
+                originalPrice: 15,
+                discount: "33% off",
+                description: "A vibrant mix of avocado, tomatoes, and chickpeas.",
+                ingredients: ["Avocado", "Tomatoes", "Chickpeas", "Olive Oil", "Flax Seeds"],
+                nutrition: {
+                    calories: 300,
+                    carbs: 35,
+                    protein: 10,
+                    fat: 15,
+                    fiber: 8
+                },
+                video: "https://via.placeholder.com/500x300?text=Video",
+                related: [2, 3, 4],
+                reviews: [
+                    { text: "Perfect for my busy schedule.", author: "Maria, Working Professional" },
+                    { text: "Very convenient and delicious.", author: "Chandan, Professional" },
+                    { text: "Fresh and always on time.", author: "Sethin, Student" }
+                ]
+            },
+            2: {
+                name: "Food Bowl 2",
+                image: "https://via.placeholder.com/500x450?text=Food+Bowl+2",
+                price: 12,
+                originalPrice: 18,
+                discount: "33% off",
+                description: "Grilled paneer with fresh greens.",
+                ingredients: ["Paneer", "Lettuce", "Bell Peppers", "Olive Oil"],
+                nutrition: { calories: 350, carbs: 30, protein: 15, fat: 20, fiber: 7 },
+                related: [1, 3, 4],
+                reviews: []
+            },
+            3: {
+                name: "Food Bowl 3",
+                image: "https://via.placeholder.com/500x450?text=Food+Bowl+3",
+                price: 8,
+                originalPrice: 12,
+                discount: "33% off",
+                description: "Whole wheat wrap with grilled tofu.",
+                ingredients: ["Tofu", "Wheat Wrap", "Carrots", "Broccoli"],
+                nutrition: { calories: 250, carbs: 40, protein: 12, fat: 10, fiber: 6 },
+                related: [1, 2, 4],
+                reviews: []
+            },
+            4: {
+                name: "Food Bowl 4",
+                image: "https://via.placeholder.com/500x450?text=Food+Bowl+4",
+                price: 15,
+                originalPrice: 20,
+                discount: "25% off",
+                description: "Zesty hummus with fresh veggies.",
+                ingredients: ["Hummus", "Cucumber", "Tomatoes", "Spinach"],
+                nutrition: { calories: 320, carbs: 38, protein: 14, fat: 16, fiber: 9 },
+                related: [1, 2, 3],
+                reviews: []
+            }
+        };
+
+        // Get Product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id') || '1';
+        const product = products[productId];
+
+        // Load Product Details
+        if (product) {
+            document.getElementById('product-image').src = product.image;
+            document.getElementById('product-title').textContent = product.name;
+            document.getElementById('product-description').textContent = product.description;
+            document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}`;
+            document.getElementById('original-price').textContent = `$${product.originalPrice.toFixed(2)}`;
+            document.getElementById('discount').textContent = product.discount;
+
+            const ingredientsList = document.getElementById('product-ingredients');
+            product.ingredients.forEach(ingredient => {
+                const li = document.createElement('li');
+                li.textContent = ingredient;
+                ingredientsList.appendChild(li);
+            });
+
+            // Nutrition Chart
+            const ctx = document.getElementById('nutrition-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Calories', 'Carbs', 'Protein', 'Fat', 'Fiber'],
+                    datasets: [{
+                        data: [
+                            product.nutrition.calories,
+                            product.nutrition.carbs,
+                            product.nutrition.protein,
+                            product.nutrition.fat,
+                            product.nutrition.fiber
+                        ],
+                        backgroundColor: [
+                            'var(--yellow)',
+                            'var(--purple)',
+                            'var(--green)',
+                            'var(--red)',
+                            'var(--orange)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Populate Related Products
+            const relatedGrid = document.getElementById('related-products');
+            product.related.forEach(id => {
+                const relatedProduct = products[id];
+                const card = document.createElement('div');
+                card.classList.add('product-card');
+                card.setAttribute('data-id', id);
+                card.innerHTML = `
+                    <img src="${relatedProduct.image}" alt="${relatedProduct.name}">
+                    <h4>${relatedProduct.name}</h4>
+                    <p>${relatedProduct.description}</p>
+                    <span class="price">$${relatedProduct.price.toFixed(2)}</span>
+                `;
+                card.addEventListener('click', () => openModal(id));
+                relatedGrid.appendChild(card);
+            });
+
+            // Populate Customer Reviews
+            const reviewGrid = document.getElementById('customer-reviews');
+            product.reviews.forEach(review => {
+                const reviewCard = document.createElement('div');
+                reviewCard.classList.add('review-card');
+                reviewCard.innerHTML = `
+                    <p>"${review.text}"</p>
+                    <em>- ${review.author}</em>
+                `;
+                reviewGrid.appendChild(reviewCard);
+            });
+        } else {
+            document.querySelector('.product-showcase').innerHTML = '<p>Product not found.</p>';
+        }
+
+        // Quantity Control
+        let quantity = 1;
+        const quantityInput = document.getElementById('quantity');
+
+        function changeQuantity(delta) {
+            quantity = Math.max(1, quantity + delta);
+            quantityInput.value = quantity;
+            gsap.to(quantityInput, { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1 });
+        }
+
+        // Add to Cart with Toast Notification
+        function addToCart() {
+            const toast = document.getElementById('toast');
+            toast.textContent = `Added ${quantity} x ${product.name} to cart!`;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+            gsap.from(".toast", { y: 50, opacity: 0, duration: 0.5 });
+        }
+
+        // Modal Functions
+        function openModal(id) {
+            const product = products[id];
+            document.getElementById('modal-image').src = product.image;
+            document.getElementById('modal-title').textContent = product.name;
+            document.getElementById('modal-description').textContent = product.description;
+            document.getElementById('modal-price').textContent = `$${product.price.toFixed(2)}`;
+            document.getElementById('modal-original-price').textContent = `$${product.originalPrice.toFixed(2)}`;
+            document.getElementById('modal-discount').textContent = product.discount;
+            document.getElementById('modal').style.display = 'flex';
+            gsap.from(".modal-content", { scale: 0.8, opacity: 0, duration: 0.5 });
+        }
+
+        function closeModal() {
+            gsap.to(".modal-content", { 
+                scale: 0.8, 
+                opacity: 0, 
+                duration: 0.5, 
+                onComplete: () => document.getElementById('modal').style.display = 'none' 
+            });
+        }
+
+        function addRelatedToCart() {
+            const toast = document.getElementById('toast');
+            toast.textContent = `Added ${quantity} x ${document.getElementById('modal-title').textContent} to cart!`;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+            closeModal();
+        }
+
+        // Nutrition Calculator
+        function calculateNutrition() {
+            const servingSize = parseInt(document.getElementById('serving-size').value);
+            const calculatedNutrition = {
+                calories: product.nutrition.calories * servingSize,
+                carbs: product.nutrition.carbs * servingSize,
+                protein: product.nutrition.protein * servingSize,
+                fat: product.nutrition.fat * servingSize,
+                fiber: product.nutrition.fiber * servingSize
+            };
+            document.getElementById('calculated-nutrition').innerHTML = `
+                <p>Calories: ${calculatedNutrition.calories} kcal</p>
+                <p>Carbs: ${calculatedNutrition.carbs}g</p>
+                <p>Protein: ${calculatedNutrition.protein}g</p>
+                <p>Fat: ${calculatedNutrition.fat}g</p>
+                <p>Fiber: ${calculatedNutrition.fiber}g</p>
+            `;
+            gsap.from("#calculated-nutrition", { opacity: 0, y: 20, duration: 0.5 });
+        }
+
+        // GSAP Animations
+        gsap.from(".hero h2", { opacity: 0, y: -50, duration: 1 });
+        gsap.from(".hero p", { opacity: 0, duration: 1, delay: 0.5 });
+        gsap.from(".hero .menu-button", { opacity: 0, duration: 1, delay: 1 });
+        gsap.from(".product-showcase", { opacity: 0, y: 50, duration: 1, delay: 1.5 });
+        gsap.from(".related-products .product-card", { opacity: 0, y: 50, stagger: 0.2, duration: 1, delay: 2 });
+        gsap.from(".customer-reviews .review-card", { opacity: 0, y: 50, stagger: 0.2, duration: 1, delay: 2.5 });
+
+        // Particle Background Configuration
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 100, density: { enable: true, value_area: 800 } },
+                color: { value: '#FFD700' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: false },
+                move: { enable: true, speed: 2, direction: 'none', random: true }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
+    </script>
+</body>
+</html>
