@@ -940,7 +940,7 @@
                     <img src="${relatedProduct.image}" alt="${relatedProduct.name}">
                     <h4>${relatedProduct.name}</h4>
                     <p>${relatedProduct.description}</p>
-                    <span class="price">$${relatedProduct.price.toFixed(2)}</span>
+                    <span class="price">${relatedProduct.price.toFixed(2)}</span>
                 `;
                 card.addEventListener('click', () => openModal(id));
                 relatedGrid.appendChild(card);
