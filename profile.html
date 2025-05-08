@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NutriFood Profile - Advanced Health and Nutrition Tracking for You and Your Partner">
+    <meta name="keywords" content="NutriFood, health metrics, profile, nutrition tracking, fitness, wellness, couple goals">
+    <meta name="author" content="Your Name">
+    <title>NutriFood - Profile Dashboard</title>
+
+    <!-- External Libraries -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --yellow: #FFD700;
+            --purple: #800080;
+            --orange: #FFA500;
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray: #808080;
+            --light-gray: #F5F5F5;
+            --green: #4CAF50;
+            --red: #FF0000;
+            --blue: #0000FF;
+            --pink: #FF69B4;
+            --boy-bg: linear-gradient(135deg, #1E90FF, #00CED1);
+            --girl-bg: linear-gradient(135deg, #FF69B4, #FFB6C1);
+            --boy-accent: #1E90FF;
+            --girl-accent: #FF69B4;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            --transition: all 0.5s ease;
+            --border-radius: 15px;
+            --spacing-large: 40px;
+            --spacing-medium: 20px;
+            --spacing-small: 10px;
+            --font-size-base: 16px;
+            --font-primary: 'Arial', sans-serif;
+            --font-secondary: 'Poppins', sans-serif;
+            --line-height-base: 1.6;
+            --border-radius-sm: 8px;
+            --border-radius-lg: 25px;
+            --transition-fast: all 0.2s ease-out;
+            --transition-std: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.075);
+            --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-primary);
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--black);
+            line-height: var(--line-height-base);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            font-size: var(--font-size-base);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--light-gray);
+            transition: background 0.5s ease;
+        }
+
+        body.boy-theme #particles-js {
+            background: var(--boy-bg);
+        }
+
+        body.girl-theme #particles-js {
+            background: var(--girl-bg);
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            padding: var(--spacing-medium) var(--spacing-large);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid transparent;
+            transition: border-color var(--transition-std);
+            min-height: 75px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-small);
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            transition: transform 0.4s ease;
+            border: 2px solid var(--purple);
+            object-fit: cover;
+        }
+
+        .logo img:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .logo h1 {
+            font-size: 2.1em;
+            color: var(--purple);
+            font-family: var(--font-secondary);
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-medium);
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 1em;
+            padding: var(--spacing-small) var(--spacing-medium);
+            border-radius: var(--border-radius-lg);
+            transition: var(--transition-fast);
+            position: relative;
+            font-weight: 600;
+            font-family: var(--font-secondary);
+        }
+
+        nav a:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+
+        nav a.active {
+            background-color: var(--purple);
+            color: var(--white);
+            font-weight: 700;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* User Actions */
+        .user-actions-profile {
+            display: flex;
+            gap: var(--spacing-medium);
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .user-info-container-profile {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-small);
+        }
+
+        .user-info-container-profile img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--purple);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .user-info-container-profile img:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow);
+        }
+
+        .user-info-container-profile span {
+            font-weight: 600;
+            color: var(--purple);
+            white-space: nowrap;
+            font-family: var(--font-secondary);
+        }
+
+        .auth-actions-container-profile button,
+        .auth-actions-container-profile a {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius-lg);
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-secondary);
+        }
+
+        .auth-actions-container-profile button:hover,
+        .auth-actions-container-profile a:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Auth Modal */
+        .auth-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-modal-content {
+            background: var(--white);
+            padding: var(--spacing-large);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .auth-modal-buttons a {
+            margin: var(--spacing-small);
+            padding: 10px 20px;
+            background: var(--purple);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .auth-modal-buttons a:hover {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        /* Profile Container */
+        .profile-container {
+            max-width: 1600px;
+            margin: var(--spacing-large) auto;
+            padding: 0 var(--spacing-medium);
+            position: relative;
+            min-height: calc(100vh - 200px);
+            overflow: hidden;
+        }
+
+        /* Profile Switcher */
+        .profile-switcher {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-large);
+            margin-bottom: var(--spacing-large);
+            position: relative;
+            flex-wrap: wrap;
+            min-height: 100px;
+        }
+
+        .profile-tab {
+            background-color: var(--white);
+            padding: 20px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-medium);
+            box-shadow: var(--shadow);
+            transition: var(--transition-std);
+            border: 3px solid transparent;
+            min-width: 200px;
+            text-align: center;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-tab img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--white);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-fast);
+        }
+
+        .profile-tab span {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--black);
+            font-family: var(--font-secondary);
+            text-transform: uppercase;
+        }
+
+        .profile-tab:hover img {
+            transform: scale(1.1);
+        }
+
+        .profile-tab:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .profile-tab.active {
+            transform: translateY(-5px) scale(1.15);
+            box-shadow: var(--shadow-lg);
+            z-index: 10;
+        }
+
+        .profile-tab.boy.active {
+            border-color: var(--boy-accent);
+            background: var(--boy-bg);
+            color: var(--white);
+        }
+
+        .profile-tab.boy.active span {
+            color: var(--white);
+        }
+
+        .profile-tab.girl.active {
+            border-color: var(--girl-accent);
+            background: var(--girl-bg);
+            color: var(--white);
+        }
+
+        .profile-tab.girl.active span {
+            color: var(--white);
+        }
+
+        .profile-tab .wave {
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 220%;
+            height: 220%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(30deg);
+            animation: wave 4s infinite linear;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(-100%) rotate(30deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(30deg);
+            }
+        }
+
+        /* Profile Content */
+        .profile-content {
+            display: none;
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-large);
+            position: relative;
+            overflow: hidden;
+            margin-top: -15px;
+            border-top: 6px solid;
+            transition: border-color var(--transition-std), background var(--transition-std), color var(--transition-std);
+            opacity: 0;
+        }
+
+        .profile-content.active {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-content.boy-profile {
+            border-color: var(--boy-accent);
+        }
+
+        .profile-content.girl-profile {
+            border-color: var(--girl-accent);
+        }
+
+        body.boy-theme .profile-content.boy-profile {
+            background: var(--boy-bg);
+            color: var(--white);
+        }
+
+        body.girl-theme .profile-content.girl-profile {
+            background: var(--girl-bg);
+            color: var(--white);
+        }
+
+        .profile-content.active h2,
+        .profile-content.active h3,
+        .profile-content.active h4,
+        .profile-content.active p,
+        .profile-content.active li,
+        .profile-content.active span,
+        .profile-content.active label,
+        .profile-content.active .metric-card p,
+        .profile-content.active .plan-card p {
+            color: inherit;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .profile-content.active .profile-details p strong {
+            font-weight: bold;
+            color: inherit;
+        }
+
+        .profile-content.active .metric-card h4 {
+            font-weight: bold;
+        }
+
+        .profile-content.active .food-table th {
+            color: var(--white);
+        }
+
+        .profile-content.active .food-table td {
+            color: inherit;
+        }
+
+        .profile-content.active .recommendations li::before {
+            color: var(--white);
+        }
+
+        .profile-content.active .metric-card,
+        .profile-content.active .recommendations li,
+        .profile-content.active .food-table-container,
+        .profile-content.active .plan-card,
+        .profile-content.active .profile-details {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .profile-content.active .food-table th {
+            background-color: rgba(0,0,0, 0.2);
+        }
+
+        .profile-content.active .food-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-content.active .editable-field input,
+        .profile-content.active .editable-field select {
+            background-color: rgba(255,255,255,0.9);
+            color: var(--black);
+            border: 1px solid var(--gray);
+        }
+
+        .profile-content.active .editable-field label {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* Section Titles */
+        .profile-content .section-title {
+            color: var(--black) !important;
+            text-shadow: none;
+            font-size: 2em;
+            margin-bottom: var(--spacing-medium);
+            text-align: center;
+            font-weight: 600;
+            font-family: var(--font-secondary);
+        }
+
+        /* Food Log and Plan Section Backgrounds */
+        .profile-content.active .food-log,
+        .profile-content.active .plan-section {
+            background-color: var(--light-gray) !important;
+            color: var(--black) !important;
+            padding: var(--spacing-large);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .profile-content.active .food-log h3,
+        .profile-content.active .plan-section h3 {
+            color: var(--black) !important;
+        }
+
+        .profile-content .food-table th,
+        .profile-content .food-table td {
+            color: var(--black) !important;
+        }
+
+        .profile-content .recommendations li {
+            color: var(--black);
+        }
+
+        .profile-content .metric-card h4,
+        .profile-content .metric-card p {
+            color: var(--black);
+        }
+
+        /* Profile Info */
+        .profile-info {
+            display: grid;
+            grid-template-columns: minmax(280px, 1fr) 2fr;
+            gap: var(--spacing-large);
+            margin-bottom: var(--spacing-large);
+            align-items: start;
+            min-height: 300px;
+        }
+
+        .profile-details {
+            text-align: center;
+            padding: var(--spacing-medium);
+            border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .profile-details img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin-bottom: var(--spacing-medium);
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 5px solid;
+            object-fit: cover;
+        }
+
+        .profile-details img:hover {
+            transform: scale(1.12) rotate(5deg);
+        }
+
+        .profile-details h2 {
+            font-size: 2.2em;
+            margin-bottom: var(--spacing-small);
+            color: var(--purple);
+            font-weight: 700;
+            font-family: var(--font-secondary);
+        }
+
+        .profile-details p {
+            font-size: 1.2em;
+            margin: 9px 0;
+            line-height: 1.8;
+            color: var(--gray);
+        }
+
+        /* Edit Mode for Partner */
+        .girl-profile .profile-details .edit-controls {
+            margin-top: var(--spacing-medium);
+        }
+
+        .girl-profile .profile-details .editable-field {
+            margin-bottom: var(--spacing-medium);
+            text-align: left;
+        }
+
+        .girl-profile .profile-details .editable-field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.95em;
+        }
+
+        .girl-profile .profile-details .editable-field input[type="text"],
+        .girl-profile .profile-details .editable-field input[type="number"],
+        .girl-profile .profile-details .editable-field select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius-sm);
+            font-size: 1em;
+        }
+
+        .girl-profile .profile-details .editable-field input[type="file"] {
+            padding: 10px;
+            border: 2px dashed var(--gray);
+            background-color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .girl-profile .profile-details .partner-edit-form {
+            display: none;
+            margin-top: var(--spacing-medium);
+            padding-top: var(--spacing-medium);
+            border-top: 1px dashed rgba(255,255,255,0.5);
+        }
+
+        .girl-profile.edit-mode .partner-edit-form {
+            display: block;
+        }
+
+        .girl-profile.edit-mode .display-value {
+            display: none;
+        }
+
+        .girl-profile .edit-mode-btn,
+        .girl-profile .save-partner-btn,
+        .girl-profile .cancel-edit-btn {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1em;
+            transition: var(--transition);
+            margin: var(--spacing-small);
+        }
+
+        .girl-profile .edit-mode-btn:hover,
+        .girl-profile .save-partner-btn:hover,
+        .girl-profile .cancel-edit-btn:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+
+        .girl-profile .profile-pic-upload-area {
+            margin-top: 15px;
+        }
+
+        /* Health Metrics */
+        .health-metrics {
+            padding: var(--spacing-medium);
+        }
+
+        .health-metrics h3 {
+            font-size: 2em;
+            margin-bottom: var(--spacing-medium);
+            text-align: center;
+            color: var(--blue);
+            font-weight: 600;
+            font-family: var(--font-secondary);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--spacing-medium);
+            margin-bottom: var(--spacing-large);
+        }
+
+        .metric-card {
+            background-color: var(--light-gray);
+            padding: var(--spacing-medium);
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-std);
+            border-left: 5px solid var(--green);
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: var(--shadow-lg);
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .metric-card h4 {
+            font-size: 1.3em;
+            margin-bottom: var(--spacing-small);
+            font-weight: 500;
+        }
+
+        .metric-card p {
+            font-size: 1.7em;
+            font-weight: bold;
+            color: var(--purple);
+        }
+
+        .health-chart {
+            max-width: 600px;
+            height: 380px;
+            margin: 0 auto;
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-small);
+        }
+
+        /* Recommendations */
+        .recommendations {
+            margin-bottom: var(--spacing-large);
+            padding: var(--spacing-medium);
+        }
+
+        .recommendations h3 {
+            font-size: 2em;
+            margin-bottom: var(--spacing-medium);
+            text-align: center;
+            color: var(--orange);
+            font-weight: 600;
+            font-family: var(--font-secondary);
+        }
+
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-medium);
+        }
+
+        .recommendations li {
+            background-color: var(--light-gray);
+            padding: var(--spacing-medium);
+            margin: var(--spacing-small) 0;
+            border-radius: var(--border-radius);
+            font-size: 1.1em;
+            position: relative;
+            padding-left: 50px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-std);
+            border-left: 5px solid var(--green);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .recommendations li:hover {
+            transform: scale(1.03);
+            box-shadow: var(--shadow-lg);
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .recommendations li::before {
+            content: '\f0a1';
+            font-family: 'Font Awesome 6 Free';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--green);
+            font-weight: 900;
+            font-size: 1.2em;
+        }
+
+        /* Food Log */
+        .food-log {
+            margin-bottom: var(--spacing-large);
+            padding: var(--spacing-medium);
+        }
+
+        .food-log h3 {
+            font-size: 2em;
+            margin-bottom: var(--spacing-medium);
+            text-align: center;
+            color: var(--black);
+            font-weight: 600;
+            font-family: var(--font-secondary);
+        }
+
+        .food-table-container {
+            overflow-x: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-small);
+        }
+
+        .food-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--light-gray);
+            margin-bottom: var(--spacing-medium);
+            min-width: 800px;
+        }
+
+        .food-table th,
+        .food-table td {
+            padding: 15px 18px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            font-size: 1.1em;
+            white-space: nowrap;
+        }
+
+        body.boy-theme .food-table th,
+        body.girl-theme .food-table th {
+            border-bottom: 1px solid rgba(255,255,255, 0.3);
+        }
+
+        .food-table th {
+            background-color: var(--yellow);
+            color: var(--black);
+            font-size: 1.2em;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-family: var(--font-secondary);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .food-table tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.02);
+        }
+
+        .food-table tr:hover {
+            background-color: rgba(255, 215, 0, 0.15);
+        }
+
+        body.boy-theme .food-table tr:nth-child(even),
+        body.girl-theme .food-table tr:nth-child(even) {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        body.boy-theme .food-table tr:hover,
+        body.girl-theme .food-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .add-food-btn,
+        .delete-btn {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 12px 25px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .add-food-btn {
+            width: 200px;
+            display: block;
+            margin: var(--spacing-medium) auto 0;
+        }
+
+        .add-food-btn i {
+            margin-right: 8px;
+        }
+
+        .delete-btn {
+            padding: 8px 15px;
+            margin: var(--spacing-small);
+        }
+
+        .add-food-btn:hover,
+        .delete-btn:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+
+        /* Plan Section */
+        .plan-section {
+            background-color: var(--light-gray);
+            padding: var(--spacing-large);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            margin-bottom: var(--spacing-large);
+            min-height: 300px;
+        }
+
+        .plan-section h3 {
+            font-size: 2em;
+            margin-bottom: var(--spacing-medium);
+            text-align: center;
+            color: var(--black);
+            font-weight: 600;
+            font-family: var(--font-secondary);
+        }
+
+        .plan-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--spacing-medium);
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .plan-card {
+            background-color: var(--white);
+            padding: var(--spacing-medium);
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-std);
+            border-left: 5px solid var(--green);
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: var(--shadow-lg);
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .plan-card h4 {
+            font-size: 1.6em;
+            margin-bottom: var(--spacing-small);
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        .plan-card p {
+            font-size: 1.2em;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1002;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: var(--spacing-large);
+            border-radius: var(--border-radius);
+            max-width: 600px;
+            width: 90%;
+            box-shadow: var(--shadow);
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2.8em;
+            color: var(--black);
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--light-gray);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: var(--red);
+            background-color: var(--yellow);
+            transform: rotate(90deg);
+        }
+
+        .modal-content h3 {
+            font-size: 2.2em;
+            margin-bottom: var(--spacing-medium);
+            text-align: center;
+            color: var(--purple);
+            font-weight: 700;
+            font-family: var(--font-secondary);
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-medium);
+            min-height: 400px;
+        }
+
+        .modal-content label {
+            font-size: 1.2em;
+            color: var(--black);
+            font-weight: bold;
+            font-family: var(--font-secondary);
+        }
+
+        .modal-content input,
+        .modal-content select {
+            padding: 12px;
+            border: 2px solid var(--gray);
+            border-radius: var(--border-radius-sm);
+            font-size: 1.1em;
+            transition: border-color 0.3s ease;
+            width: 100%;
+        }
+
+        .modal-content input:focus,
+        .modal-content select:focus {
+            border-color: var(--green);
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        .modal-content button {
+            background-color: var(--green);
+            color: var(--white);
+            padding: 12px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: var(--transition);
+            width: 200px;
+            align-self: center;
+            margin-top: var(--spacing-medium);
+            font-family: var(--font-secondary);
+            font-weight: 600;
+        }
+
+        .modal-content button:hover {
+            background-color: var(--yellow);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: var(--red);
+            font-size: 1em;
+            text-align: center;
+            display: none;
+            margin-top: var(--spacing-small);
+            padding: var(--spacing-small);
+            background-color: rgba(255, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .plan-details {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .modal-content {
+                max-width: 85%;
+            }
+        }
+
+        @media (max-width: 900px) {
+            header {
+                flex-direction: column;
+                padding: var(--spacing-small) var(--spacing-medium);
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: var(--spacing-small);
+                margin-top: var(--spacing-medium);
+            }
+
+            .user-actions-profile {
+                width: 100%;
+                justify-content: center;
+                margin-top: var(--spacing-medium);
+            }
+
+            .profile-switcher {
+                flex-direction: column;
+                gap: var(--spacing-medium);
+            }
+
+            .profile-content {
+                padding: var(--spacing-medium);
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .food-table th,
+            .food-table td {
+                font-size: 1em;
+                padding: 10px;
+            }
+
+            .modal-content {
+                max-width: 90%;
+                padding: var(--spacing-medium);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .logo img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo h1 {
+                font-size: 2em;
+            }
+
+            nav a {
+                font-size: 1em;
+                padding: var(--spacing-small);
+            }
+
+            .profile-tab {
+                padding: 15px 30px;
+                min-width: 150px;
+            }
+
+            .profile-details img {
+                width: 150px;
+                height: 150px;
+            }
+
+            .profile-details h2 {
+                font-size: 1.8em;
+            }
+
+            .metric-card h4 {
+                font-size: 1em;
+            }
+
+            .metric-card p {
+                font-size: 1.3em;
+            }
+
+            .recommendations li {
+                font-size: 1em;
+                padding-left: 40px;
+            }
+
+            .plan-card h4 {
+                font-size: 1.2em;
+            }
+
+            .plan-card p {
+                font-size: 1em;
+            }
+
+            .modal-content h3 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body class="boy-theme">
+    <div class="auth-modal-overlay" id="authModalOverlay">
+        <div class="auth-modal-content">
+            <div class="logo-container">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="NutriFood Logo">
+                <h1>NutriFood</h1>
+            </div>
+            <h2>Access Your Profile</h2>
+            <p>Please sign in to view your profile dashboard.</p>
+            <div class="auth-modal-buttons">
+                <a href="login.html" class="login-btn-modal">Login <i class="fas fa-sign-in-alt"></i></a>
+                <a href="signup.html">Register <i class="fas fa-user-plus"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-wrapper" id="pageWrapper" style="display: none;">
+        <div id="particles-js"></div>
+
+        <header id="mainHeader">
+            <div class="logo">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" alt="NutriFood Logo">
+                <h1>NutriFood</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="plans.html">Plans</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="profile.html" class="active">Profile</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions-profile">
+                <div class="user-info-container-profile" id="userInfoContainerProfile"></div>
+                <div class="auth-actions-container-profile" id="authActionsContainerProfile"></div>
+            </div>
+        </header>
+
+        <div class="profile-container">
+            <div class="profile-switcher">
+                <div class="profile-tab boy active" data-profile="boy">
+                    <img src="https://via.placeholder.com/60?text=User" alt="My Profile" id="boyTabPic">
+                    <span id="boyTabName">My Profile</span>
+                    <div class="wave"></div>
+                </div>
+                <div class="profile-tab girl" data-profile="girl">
+                    <img src="https://via.placeholder.com/60?text=Partner" alt="Partner Profile" id="girlTabPic">
+                    <span id="girlTabName">Partner</span>
+                    <div class="wave"></div>
+                </div>
+            </div>
+
+            <div class="profile-content boy-profile active" id="boyProfileContent">
+                <div class="profile-info">
+                    <div class="profile-details">
+                        <img src="https://via.placeholder.com/180?text=User" alt="My Profile Picture" id="boy-profilePic">
+                        <h2 id="boy-userName">My Name</h2>
+                        <p><strong>Age:</strong> <span id="boy-userAge">--</span></p>
+                        <p><strong>Gender:</strong> <span id="boy-userGender">--</span></p>
+                        <p><strong>Email:</strong> <span id="boy-userEmail">--</span></p>
+                        <p><strong>Phone:</strong> <span id="boy-userPhone">--</span></p>
+                        <p><strong>Current Weight:</strong> <span id="boy-userCurrentWeight">--</span> kg</p>
+                        <p><strong>Target Weight:</strong> <span id="boy-userTargetWeight">--</span> kg</p>
+                        <p><strong>Height:</strong> <span id="boy-userHeight">--</span> cm</p>
+                        <p><strong>BMI:</strong> <span id="boy-userBMI">--</span></p>
+                        <p><strong>Diet Pref:</strong> <span id="boy-userDietPref">--</span></p>
+                        <p><strong>Fitness Goal:</strong> <span id="boy-userFitnessGoal">--</span></p>
+                        <p><strong>Address:</strong> <span id="boy-userAddress">--</span></p>
+                    </div>
+                    <div class="health-metrics">
+                        <h3 class="section-title">My Health Metrics</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-card"><h4>Calories</h4><p id="boy-calories">0 kcal</p></div>
+                            <div class="metric-card"><h4>Carbs</h4><p id="boy-carbs">0 g</p></div>
+                            <div class="metric-card"><h4>Protein</h4><p id="boy-protein">0 g</p></div>
+                            <div class="metric-card"><h4>Fat</h4><p id="boy-fat">0 g</p></div>
+                            <div class="metric-card"><h4>Fiber</h4><p id="boy-fiber">0 g</p></div>
+                            <div class="metric-card"><h4>Water</h4><p id="boy-water">0 ml</p></div>
+                        </div>
+                        <canvas id="boy-health-chart" class="health-chart"></canvas>
+                    </div>
+                </div>
+                <div class="recommendations">
+                    <h3 class="section-title">My Recommendations</h3>
+                    <ul id="boy-recommendations"></ul>
+                </div>
+                <div class="food-log">
+                    <h3 class="section-title">My Food Consumption Log</h3>
+                    <div class="food-table-container">
+                        <table class="food-table">
+                            <thead>
+                                <tr>
+                                    <th>Food Name</th>
+                                    <th>Quantity</th>
+                                    <th>Calories</th>
+                                    <th>Carbs</th>
+                                    <th>Protein</th>
+                                    <th>Fat</th>
+                                    <th>Fiber</th>
+                                    <th>Water</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="boy-food-log"></tbody>
+                        </table>
+                    </div>
+                    <button class="add-food-btn" onclick="openFoodModal('boy')"><i class="fas fa-plus-circle"></i> Add My Food</button>
+                </div>
+                <div class="plan-section">
+                    <h3 class="section-title">My Plan</h3>
+                    <div class="plan-details">
+                        <div class="plan-card"><h4>Calorie Goal</h4><p id="boy-calorie-goal">-- kcal</p></div>
+                        <div class="plan-card"><h4>Protein Target</h4><p id="boy-protein-goal">-- g</p></div>
+                        <div class="plan-card"><h4>Carb Target</h4><p id="boy-carb-goal">-- g</p></div>
+                        <div class="plan-card"><h4>Fat Target</h4><p id="boy-fat-goal">-- g</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-content girl-profile" id="girlProfileContent">
+                <div class="profile-info">
+                    <div class="profile-details">
+                        <img src="https://via.placeholder.com/180?text=Partner" alt="Partner Profile Picture" id="girl-profilePic">
+                        <h2 id="girl-userName">Partner Name</h2>
+                        <p class="display-value"><strong>Age:</strong> <span id="girl-userAge">--</span></p>
+                        <p class="display-value"><strong>Gender:</strong> <span id="girl-userGender">--</span></p>
+                        <p class="display-value"><strong>Current Weight:</strong> <span id="girl-userCurrentWeight">--</span> kg</p>
+                        <p class="display-value"><strong>Target Weight:</strong> <span id="girl-userTargetWeight">--</span> kg</p>
+                        <p class="display-value"><strong>Height:</strong> <span id="girl-userHeight">--</span> cm</p>
+                        <p class="display-value"><strong>BMI:</strong> <span id="girl-userBMI">--</span></p>
+                        <p class="display-value"><strong>Diet Pref:</strong> <span id="girl-userDietPref">--</span></p>
+                        <p class="display-value"><strong>Fitness Goal:</strong> <span id="girl-userFitnessGoal">--</span></p>
+                        <div class="edit-controls">
+                            <button class="edit-mode-btn" onclick="togglePartnerEditMode(true)"><i class="fas fa-user-edit"></i> Edit Partner Info</button>
+                            <form id="partnerEditForm" class="partner-edit-form">
+                                <div class="editable-field profile-pic-upload-area">
+                                    <label for="girlProfilePicInput"><i class="fas fa-camera"></i> Change Partner Picture:</label>
+                                    <input type="file" id="girlProfilePicInput" accept="image/*">
+                                </div>
+                                <div class="editable-field">
+                                    <label for="girlNameInput"><i class="fas fa-user"></i> Partner Name:</label>
+                                    <input type="text" id="girlNameInput" placeholder="Partner's Name">
+                                </div>
+                                <div class="editable-field">
+                                    <label for="girlAgeInput"><i class="fas fa-birthday-cake"></i> Partner Age:</label>
+                                    <input type="number" id="girlAgeInput" placeholder="Age" min="0">
+                                </div>
+                                <div class="editable-field">
+                                    <label for="girlGenderInput"><i class="fas fa-venus-mars"></i> Partner Gender:</label>
+                                    <select id="girlGenderInput">
+                                        <option value="" disabled selected>Select Gender</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Other">Other</option>
+                                        <option value="Prefer not to say">Prefer not to say</option>
+                                    </select>
+                                </div>
+                                <div class="editable-field">
+                                    <label for="girlCurrentWeightInput"><i class="fas fa-weight"></i> Current Weight (kg):</label>
+                                    <input type="number" id="girlCurrentWeightInput" placeholder="kg" step="0.1" min="0">
+                                </div>
+                                <div class="editable-field">
+                                    <label for="girlTargetWeightInput"><i class="fas fa-bullseye"></i> Target Weight (kg):</label>
+                                    <input type="number" id="girlTargetWeightInput" placeholder="kg" step="0.1" min="0">
+                                </div>
+                                <div class="editable-field">
+                                    <label for="girlHeightInput"><i class="fas fa-ruler-vertical"></i> Height (cm):</label>
+                                    <input type="number" id="girlHeightInput" placeholder="cm" min="0">
+                                </div>
+                                <div class="editable-field">
+                                    <label for="girlDietPrefInput"><i class="fas fa-leaf"></i> Dietary Preference:</label>
+                                    <select id="girlDietPrefInput">
+                                        <option value="" disabled selected>Select Preference</option>
+                                        <option value="Vegetarian">Vegetarian</option>
+                                        <option value="Vegan">Vegan</option>
+                                        <option value="Gluten-Free">Gluten-Free</option>
+                                        <option value="Keto">Keto</option>
+                                        <option value="Paleo">Paleo</option>
+                                        <option value="Non-Vegetarian">Non-Vegetarian</option>
+                                        <option value="Anything">Anything</option>
+                                    </select>
+                                </div>
+                                <div class="editable-field">
+                                    <label for="girlFitnessGoalInput"><i class="fas fa-dumbbell"></i> Fitness Goal:</label>
+                                    <select id="girlFitnessGoalInput">
+                                        <option value="" disabled selected>Select Goal</option>
+                                        <option value="Weight Loss">Weight Loss</option>
+                                        <option value="Muscle Gain">Muscle Gain</option>
+                                        <option value="Maintenance">Maintenance</option>
+                                        <option value="Improve Health">Improve Overall Health</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="save-partner-btn" onclick="savePartnerInfo()"><i class="fas fa-save"></i> Save</button>
+                                <button type="button" class="cancel-edit-btn" onclick="togglePartnerEditMode(false)"><i class="fas fa-times"></i> Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="health-metrics">
+                        <h3 class="section-title">Partner's Health Metrics</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-card"><h4>Calories</h4><p id="girl-calories">0 kcal</p></div>
+                            <div class="metric-card"><h4>Carbs</h4><p id="girl-carbs">0 g</p></div>
+                            <div class="metric-card"><h4>Protein</h4><p id="girl-protein">0 g</p></div>
+                            <div class="metric-card"><h4>Fat</h4><p id="girl-fat">0 g</p></div>
+                            <div class="metric-card"><h4>Fiber</h4><p id="girl-fiber">0 g</p></div>
+                            <div class="metric-card"><h4>Water</h4><p id="girl-water">0 ml</p></div>
+                        </div>
+                        <canvas id="girl-health-chart" class="health-chart"></canvas>
+                    </div>
+                </div>
+                <div class="recommendations">
+                    <h3 class="section-title">Partner's Recommendations</h3>
+                    <ul id="girl-recommendations"></ul>
+                </div>
+                <div class="food-log">
+                    <h3 class="section-title">Partner's Food Consumption Log</h3>
+                    <div class="food-table-container">
+                        <table class="food-table">
+                            <thead>
+                                <tr>
+                                    <th>Food Name</th>
+                                    <th>Quantity</th>
+                                    <th>Calories</th>
+                                    <th>Carbs</th>
+                                    <th>Protein</th>
+                                    <th>Fat</th>
+                                    <th>Fiber</th>
+                                    <th>Water</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="girl-food-log"></tbody>
+                        </table>
+                    </div>
+                    <button class="add-food-btn" onclick="openFoodModal('girl')"><i class="fas fa-plus-circle"></i> Add Partner's Food</button>
+                </div>
+                <div class="plan-section">
+                    <h3 class="section-title">Partner's Plan</h3>
+                    <div class="plan-details">
+                        <div class="plan-card"><h4>Calorie Goal</h4><p id="girl-calorie-goal">-- kcal</p></div>
+                        <div class="plan-card"><h4>Protein Target</h4><p id="girl-protein-goal">-- g</p></div>
+                        <div class="plan-card"><h4>Carb Target</h4><p id="girl-carb-goal">-- g</p></div>
+                        <div class="plan-card"><h4>Fat Target</h4><p id="girl-fat-goal">-- g</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="food-modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeFoodModal()">×</span>
+                <h3 id="foodModalTitle">Add Food Item</h3>
+                <div class="error-message" id="error-message"></div>
+                <form id="food-form">
+                    <label for="food-name">Food Name:</label>
+                    <input type="text" id="food-name" required placeholder="e.g., Apple">
+                    <label for="quantity">Quantity/Serving:</label>
+                    <input type="number" id="quantity" min="0.1" step="0.1" value="1" required placeholder="e.g., 1">
+                    <label for="calories">Calories (kcal):</label>
+                    <input type="number" id="calories" min="0" required placeholder="e.g., 95">
+                    <label for="carbs">Carbs (g):</label>
+                    <input type="number" id="carbs" min="0" step="0.1" required placeholder="e.g., 25">
+                    <label for="protein">Protein (g):</label>
+                    <input type="number" id="protein" min="0" step="0.1" required placeholder="e.g., 0.5">
+                    <label for="fat">Fat (g):</label>
+                    <input type="number" id="fat" min="0" step="0.1" required placeholder="e.g., 0.3">
+                    <label for="fiber">Fiber (g):</label>
+                    <input type="number" id="fiber" min="0" step="0.1" required placeholder="e.g., 4.4">
+                    <label for="water">Water Intake (ml) (Optional):</label>
+                    <input type="number" id="water" min="0" placeholder="e.g., 250">
+                    <button type="submit"><i class="fas fa-check-circle"></i> Add to Log</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // Global Variables
+        let currentUserData = null;
+        let currentActiveProfile = 'boy';
+        let boyChartInstance = null;
+        let girlChartInstance = null;
+        let foodModalTargetProfile = 'boy';
+
+        // DOM Update Helpers
+        const safeSetText = (id, value) => {
+            const element = document.getElementById(id);
+            if (element) element.textContent = value ?? '--';
+        };
+
+        const safeSetSrc = (id, value, fallback) => {
+            const element = document.getElementById(id);
+            if (element) {
+                const finalSrc = value || fallback || '';
+                if (element.src !== finalSrc) element.src = finalSrc;
+                element.onerror = () => { if(fallback) element.src = fallback; };
+            }
+        };
+
+        const safeSetInputValue = (id, value) => {
+            const element = document.getElementById(id);
+            if (element) element.value = value ?? '';
+        };
+
+        const safeSetStyle = (id, property, value) => {
+            const element = document.getElementById(id);
+            if (element) element.style[property] = value;
+        };
+
+        // Utility Functions
+        const calculateAge = (dateString) => {
+            if (!dateString) return '--';
+            try {
+                const birthDate = new Date(dateString);
+                if (isNaN(birthDate.getTime())) return '--';
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+                return age >= 0 ? age : '--';
+            } catch (e) {
+                return '--';
+            }
+        };
+
+        const calculateBMI = (weight, height) => {
+            if (!weight || !height || height <= 0) return '--';
+            try {
+                const h = parseFloat(height) / 100;
+                const bmi = parseFloat(weight) / (h * h);
+                return isNaN(bmi) ? '--' : bmi.toFixed(1);
+            } catch(e) {
+                return '--';
+            }
+        };
+
+        const calculateMetrics = (foodLog = []) => {
+            let total = { calories: 0, carbs: 0, protein: 0, fat: 0, fiber: 0, water: 0 };
+            if (!Array.isArray(foodLog)) return total;
+            foodLog.forEach(food => {
+                const qty = Number(food.quantity) || 1;
+                total.calories += (Number(food.calories) || 0) * qty;
+                total.carbs += (Number(food.carbs) || 0) * qty;
+                total.protein += (Number(food.protein) || 0) * qty;
+                total.fat += (Number(food.fat) || 0) * qty;
+                total.fiber += (Number(food.fiber) || 0) * qty;
+                total.water += Number(food.water) || 0;
+            });
+            for (const key in total) {
+                total[key] = Math.round(total[key] * 10) / 10;
+            }
+            return total;
+        };
+
+        function generateRecommendations(user, metrics) {
+            const recommendations = [];
+            const weightDiff = user.currentWeight - user.targetWeight;
+
+            if (weightDiff > 0) {
+                recommendations.push(`To lose ${weightDiff} kg, reduce daily calorie intake by 300-500 kcal below your current ${metrics.calories} kcal.`);
+            } else if (weightDiff < 0) {
+                recommendations.push(`To gain ${Math.abs(weightDiff)} kg, increase daily calorie intake by 300-500 kcal above your current ${metrics.calories} kcal.`);
+            }
+
+            if (metrics.calories < user.calorieGoal.min) {
+                recommendations.push(`Increase calorie intake to ${user.calorieGoal.min}-${user.calorieGoal.max} kcal daily. Current: ${metrics.calories} kcal.`);
+            } else if (metrics.calories > user.calorieGoal.max) {
+                recommendations.push(`Decrease calorie intake to ${user.calorieGoal.min}-${user.calorieGoal.max} kcal daily. Current: ${metrics.calories} kcal.`);
+            }
+
+            if (metrics.protein < user.proteinGoal.min) {
+                recommendations.push(`Increase protein to ${user.proteinGoal.min}-${user.proteinGoal.max} g daily for muscle support. Current: ${metrics.protein} g.`);
+            } else if (metrics.protein > user.proteinGoal.max) {
+                recommendations.push(`Decrease protein to ${user.proteinGoal.min}-${user.proteinGoal.max} g daily. Current: ${metrics.protein} g.`);
+            }
+
+            if (metrics.carbs < user.carbGoal.min) {
+                recommendations.push(`Increase carbs to ${user.carbGoal.min}-${user.carbGoal.max} g daily for energy. Current: ${metrics.carbs} g.`);
+            } else if (metrics.carbs > user.carbGoal.max) {
+                recommendations.push(`Decrease carbs to ${user.carbGoal.min}-${user.carbGoal.max} g daily. Current: ${metrics.carbs} g.`);
+            }
+
+            if (metrics.fat < user.fatGoal.min) {
+                recommendations.push(`Increase fat to ${user.fatGoal.min}-${user.fatGoal.max} g daily. Current: ${metrics.fat} g.`);
+            } else if (metrics.fat > user.fatGoal.max) {
+                recommendations.push(`Decrease fat to ${user.fatGoal.min}-${user.fatGoal.max} g daily. Current: ${metrics.fat} g.`);
+            }
+
+            if (metrics.fiber < 25) {
+                recommendations.push(`Increase fiber to at least 25 g daily for digestive health. Current: ${metrics.fiber} g.`);
+            }
+
+            if (metrics.water < user.waterGoal) {
+                recommendations.push(`Increase water intake to ${user.waterGoal} ml daily. Current: ${metrics.water} ml.`);
+            }
+
+            return recommendations.length > 0 ? recommendations : ['Your current intake is balanced with your goals.'];
+        }
+
+        // UI Update Functions
+        function populateFoodLog(profileType, foodLog = []) {
+            const logBody = document.getElementById(`${profileType}-food-log`);
+            if (!logBody) return;
+            logBody.innerHTML = '';
+            foodLog.forEach((food, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${food.name}</td>
+                    <td>${food.quantity}</td>
+                    <td>${food.calories}</td>
+                    <td>${food.carbs}</td>
+                    <td>${food.protein}</td>
+                    <td>${food.fat}</td>
+                    <td>${food.fiber}</td>
+                    <td>${food.water}</td>
+                    <td><button class="delete-btn" onclick="deleteFoodItem('${profileType}', ${index})">Delete</button></td>
+                `;
+                logBody.appendChild(row);
+            });
+            gsap.from(logBody.children, { opacity: 0, y: 20, stagger: 0.1, duration: 0.5 });
+        }
+
+        function updateHealthChart(profileType, metrics) {
+            const ctx = document.getElementById(`${profileType}-health-chart`)?.getContext('2d');
+            if (!ctx) return;
+
+            if (window[`${profileType}ChartInstance`]) window[`${profileType}ChartInstance`].destroy();
+            window[`${profileType}ChartInstance`] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Calories', 'Carbs', 'Protein', 'Fat', 'Fiber', 'Water'],
+                    datasets: [{
+                        label: 'Daily Intake',
+                        data: [metrics.calories, metrics.carbs, metrics.protein, metrics.fat, metrics.fiber, metrics.water],
+                        backgroundColor: [
+                            'rgba(255, 215, 0, 0.8)',
+                            'rgba(128, 0, 128, 0.8)',
+                            'rgba(76, 175, 80, 0.8)',
+                            'rgba(255, 0, 0, 0.8)',
+                            'rgba(255, 165, 0, 0.8)',
+                            'rgba(0, 0, 255, 0.8)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Value' } }
+                    },
+                    plugins: {
+                        legend: { display: true, position: 'top' },
+                        tooltip: { mode: 'index', intersect: false }
+                    }
+                }
+            });
+        }
+
+        function populateAllProfileData(user) {
+            if (!user) {
+                console.error("Populate Error: No user data.");
+                return;
+            }
+            currentUserData = user;
+
+            user.partner = user.partner || createDefaultPartnerData();
+            const partnerData = user.partner;
+
+            // Boy Profile (User)
+            safeSetSrc('boyTabPic', user.profilePic, 'https://via.placeholder.com/60?text=User');
+            safeSetText('boyTabName', user.firstName || user.username || "My Profile");
+            safeSetSrc('boy-profilePic', user.profilePic, 'https://via.placeholder.com/180?text=User');
+            safeSetStyle('boy-profilePic', 'borderColor', 'var(--boy-accent)');
+            safeSetText('boy-userName', `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.username);
+            safeSetText('boy-userAge', calculateAge(user.dob));
+            safeSetText('boy-userGender', user.gender);
+            safeSetText('boy-userEmail', user.email);
+            safeSetText('boy-userPhone', user.phone);
+            safeSetText('boy-userCurrentWeight', user.currentWeight);
+            safeSetText('boy-userTargetWeight', user.targetWeight);
+            safeSetText('boy-userHeight', user.height);
+            safeSetText('boy-userBMI', calculateBMI(user.currentWeight, user.height));
+            safeSetText('boy-userDietPref', user.dietaryPreference);
+            safeSetText('boy-userFitnessGoal', user.fitnessGoal);
+            safeSetText('boy-userAddress', user.address);
+
+            const boyMetrics = calculateMetrics(user.foodLog);
+            safeSetText('boy-calories', `${boyMetrics.calories} kcal`);
+            safeSetText('boy-carbs', `${boyMetrics.carbs} g`);
+            safeSetText('boy-protein', `${boyMetrics.protein} g`);
+            safeSetText('boy-fat', `${boyMetrics.fat} g`);
+            safeSetText('boy-fiber', `${boyMetrics.fiber} g`);
+            safeSetText('boy-water', `${boyMetrics.water} ml`);
+            updateHealthChart('boy', boyMetrics);
+
+            const boyRecList = document.getElementById('boy-recommendations');
+            if (boyRecList) {
+                const recommendations = generateRecommendations(user, boyMetrics);
+                boyRecList.innerHTML = '';
+                recommendations.forEach(rec => {
+                    const li = document.createElement('li');
+                    li.textContent = rec;
+                    boyRecList.appendChild(li);
+                });
+                gsap.from(boyRecList.children, { opacity: 0, x: -20, stagger: 0.1, duration: 0.5 });
+            }
+            populateFoodLog('boy', user.foodLog);
+
+            // Populate Plan Details for Boy
+            safeSetText('boy-calorie-goal', `${user.calorieGoal?.min ?? '--'}-${user.calorieGoal?.max ?? '--'} kcal`);
+            safeSetText('boy-protein-goal', `${user.proteinGoal?.min ?? '--'}-${user.proteinGoal?.max ?? '--'} g`);
+            safeSetText('boy-carb-goal', `${user.carbGoal?.min ?? '--'}-${user.carbGoal?.max ?? '--'} g`);
+            safeSetText('boy-fat-goal', `${user.fatGoal?.min ?? '--'}-${user.fatGoal?.max ?? '--'} g`);
+
+            // Girl Profile (Partner)
+            safeSetSrc('girlTabPic', partnerData.profilePic, 'https://via.placeholder.com/60?text=Partner');
+            safeSetText('girlTabName', partnerData.name || "Partner");
+            safeSetSrc('girl-profilePic', partnerData.profilePic, 'https://via.placeholder.com/180?text=Partner');
+            safeSetStyle('girl-profilePic', 'borderColor', 'var(--girl-accent)');
+            safeSetText('girl-userName', partnerData.name);
+            safeSetText('girl-userAge', partnerData.age);
+            safeSetText('girl-userGender', partnerData.gender);
+            safeSetText('girl-userCurrentWeight', partnerData.currentWeight);
+            safeSetText('girl-userTargetWeight', partnerData.targetWeight);
+            safeSetText('girl-userHeight', partnerData.height);
+            safeSetText('girl-userBMI', calculateBMI(partnerData.currentWeight, partnerData.height));
+            safeSetText('girl-userDietPref', partnerData.dietaryPreference);
+            safeSetText('girl-userFitnessGoal', partnerData.fitnessGoal);
+
+            safeSetInputValue('girlNameInput', partnerData.name);
+            safeSetInputValue('girlAgeInput', partnerData.age);
+            safeSetInputValue('girlGenderInput', partnerData.gender);
+            safeSetInputValue('girlCurrentWeightInput', partnerData.currentWeight);
+            safeSetInputValue('girlTargetWeightInput', partnerData.targetWeight);
+            safeSetInputValue('girlHeightInput', partnerData.height);
+            safeSetInputValue('girlDietPrefInput', partnerData.dietaryPreference);
+            safeSetInputValue('girlFitnessGoalInput', partnerData.fitnessGoal);
+            safeSetInputValue('girlProfilePicInput', null);
+
+            const girlMetrics = calculateMetrics(partnerData.foodLog);
+            safeSetText('girl-calories', `${girlMetrics.calories} kcal`);
+            safeSetText('girl-carbs', `${girlMetrics.carbs} g`);
+            safeSetText('girl-protein', `${girlMetrics.protein} g`);
+            safeSetText('girl-fat', `${girlMetrics.fat} g`);
+            safeSetText('girl-fiber', `${girlMetrics.fiber} g`);
+            safeSetText('girl-water', `${girlMetrics.water} ml`);
+            updateHealthChart('girl', girlMetrics);
+
+            const girlRecList = document.getElementById('girl-recommendations');
+            if (girlRecList) {
+                const recommendations = generateRecommendations(partnerData, girlMetrics);
+                girlRecList.innerHTML = '';
+                recommendations.forEach(rec => {
+                    const li = document.createElement('li');
+                    li.textContent = rec;
+                    girlRecList.appendChild(li);
+                });
+                gsap.from(girlRecList.children, { opacity: 0, x: -20, stagger: 0.1, duration: 0.5 });
+            }
+            populateFoodLog('girl', partnerData.foodLog);
+
+            // Populate Plan Details for Girl
+            safeSetText('girl-calorie-goal', `${partnerData.calorieGoal?.min ?? '--'}-${partnerData.calorieGoal?.max ?? '--'} kcal`);
+            safeSetText('girl-protein-goal', `${partnerData.proteinGoal?.min ?? '--'}-${partnerData.proteinGoal?.max ?? '--'} g`);
+            safeSetText('girl-carb-goal', `${partnerData.carbGoal?.min ?? '--'}-${partnerData.carbGoal?.max ?? '--'} g`);
+            safeSetText('girl-fat-goal', `${partnerData.fatGoal?.min ?? '--'}-${partnerData.fatGoal?.max ?? '--'} g`);
+
+            switchProfileTab(currentActiveProfile, false);
+        }
+
+        // Event Handlers
+        function switchProfileTab(profileToShow, animate = true) {
+            const activeTab = document.querySelector('.profile-tab.active');
+            const activeContent = document.querySelector('.profile-content.active');
+            const newTab = document.querySelector(`.profile-tab[data-profile="${profileToShow}"]`);
+            const newContent = document.getElementById(`${profileToShow}ProfileContent`);
+            const header = document.getElementById('mainHeader');
+            const body = document.body;
+
+            if (!newTab || !newContent) return;
+
+            const oldProfile = currentActiveProfile;
+            currentActiveProfile = profileToShow;
+
+            body.classList.remove(`${oldProfile}-theme`);
+            body.classList.add(`${profileToShow}-theme`);
+            if (header) header.style.borderColor = `var(--${profileToShow}-accent)`;
+
+            const tl = gsap.timeline({ paused: true });
+
+            if (activeContent && animate) {
+                tl.to(activeContent, { opacity: 0, y: -15, duration: 0.25, ease: 'power1.in' });
+            }
+
+            tl.call(() => {
+                activeTab?.classList.remove('active');
+                activeContent?.classList.remove('active');
+                if (activeContent) activeContent.style.display = 'none';
+
+                newTab.classList.add('active');
+                newContent.style.display = 'block';
+                newContent.classList.add('active');
+                if (animate) {
+                    gsap.fromTo(newContent, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power1.out' });
+                } else {
+                    newContent.style.opacity = 1;
+                }
+                if (profileToShow === 'boy' || !girlProfileDiv.classList.contains('edit-mode')) {
+                    togglePartnerEditMode(false);
+                }
+            });
+
+            tl.play();
+        }
+
+        const profileSwitcher = document.querySelector('.profile-switcher');
+        if (profileSwitcher) {
+            profileSwitcher.addEventListener('click', (e) => {
+                const tab = e.target.closest('.profile-tab');
+                if (tab) {
+                    const profile = tab.getAttribute('data-profile');
+                    switchProfileTab(profile);
+                }
+            });
+        }
+
+        const girlProfileDiv = document.getElementById('girlProfileContent');
+        function togglePartnerEditMode(enable) {
+            if (!girlProfileDiv) return;
+            const editForm = document.getElementById('partnerEditForm');
+            const editButton = girlProfileDiv.querySelector('.edit-mode-btn');
+
+            if (enable) {
+                const partnerData = currentUserData?.partner || createDefaultPartnerData();
+                safeSetInputValue('girlNameInput', partnerData.name);
+                safeSetInputValue('girlAgeInput', partnerData.age);
+                safeSetInputValue('girlGenderInput', partnerData.gender);
+                safeSetInputValue('girlCurrentWeightInput', partnerData.currentWeight);
+                safeSetInputValue('girlTargetWeightInput', partnerData.targetWeight);
+                safeSetInputValue('girlHeightInput', partnerData.height);
+                safeSetInputValue('girlDietPrefInput', partnerData.dietaryPreference);
+                safeSetInputValue('girlFitnessGoalInput', partnerData.fitnessGoal);
+                safeSetInputValue('girlProfilePicInput', null);
+
+                girlProfileDiv.classList.add('edit-mode');
+                if (editButton) editButton.style.display = 'none';
+                if (editForm) {
+                    editForm.style.height = 'auto';
+                    editForm.style.display = 'block';
+                    gsap.fromTo(editForm, { opacity: 0, height: 0 }, { opacity: 1, height: 'auto', duration: 0.5, ease: 'power2.out', clearProps:"height" });
+                }
+            } else {
+                if (editForm && girlProfileDiv.classList.contains('edit-mode')) {
+                    gsap.to(editForm, {
+                        opacity: 0,
+                        height: 0,
+                        duration: 0.4,
+                        ease: 'power1.in',
+                        onComplete: () => {
+                            editForm.style.display = 'none';
+                            girlProfileDiv.classList.remove('edit-mode');
+                            if (editButton) editButton.style.display = 'inline-block';
+                        }
+                    });
+                } else {
+                    if (editForm) editForm.style.display = 'none';
+                    girlProfileDiv.classList.remove('edit-mode');
+                    if (editButton) editButton.style.display = 'inline-block';
+                }
+            }
+        }
+
+        function savePartnerInfo() {
+            if (!currentUserData) {
+                showErrorAlert("Please log in again.");
+                return;
+            }
+
+            currentUserData.partner = currentUserData.partner || createDefaultPartnerData();
+
+            const partnerPicInput = document.getElementById('girlProfilePicInput');
+            const newPartnerData = {
+                name: document.getElementById('girlNameInput')?.value.trim() || currentUserData.partner.name,
+                age: parseInt(document.getElementById('girlAgeInput')?.value) || currentUserData.partner.age,
+                gender: document.getElementById('girlGenderInput')?.value || currentUserData.partner.gender,
+                currentWeight: parseFloat(document.getElementById('girlCurrentWeightInput')?.value) || currentUserData.partner.currentWeight,
+                targetWeight: parseFloat(document.getElementById('girlTargetWeightInput')?.value) || currentUserData.partner.targetWeight,
+                height: parseInt(document.getElementById('girlHeightInput')?.value) || currentUserData.partner.height,
+                dietaryPreference: document.getElementById('girlDietPrefInput')?.value || currentUserData.partner.dietaryPreference,
+                fitnessGoal: document.getElementById('girlFitnessGoalInput')?.value || currentUserData.partner.fitnessGoal,
+                foodLog: currentUserData.partner.foodLog || [],
+                calorieGoal: currentUserData.partner.calorieGoal || { min: 1600, max: 2000 },
+                proteinGoal: currentUserData.partner.proteinGoal || { min: 80, max: 120 },
+                carbGoal: currentUserData.partner.carbGoal || { min: 150, max: 200 },
+                fatGoal: currentUserData.partner.fatGoal || { min: 40, max: 60 },
+                waterGoal: currentUserData.partner.waterGoal || 1800,
+                profilePic: currentUserData.partner.profilePic
+            };
+
+            const saveUpdates = () => {
+                currentUserData.partner = newPartnerData;
+                if (saveCurrentUser(currentUserData)) {
+                    populateAllProfileData(currentUserData);
+                    togglePartnerEditMode(false);
+                    showSuccessAlert('Partner info updated!');
+                } else {
+                    showErrorAlert('Failed to save partner info.');
+                }
+            };
+
+            if (partnerPicInput?.files && partnerPicInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    newPartnerData.profilePic = event.target.result;
+                    saveUpdates();
+                };
+                reader.onerror = function() {
+                    showErrorAlert('Error reading partner profile picture.');
+                };
+                reader.readAsDataURL(partnerPicInput.files[0]);
+            } else {
+                saveUpdates();
+            }
+        }
+
+        function openFoodModal(targetProfile) {
+            foodModalTargetProfile = targetProfile;
+            const modal = document.getElementById('food-modal');
+            modal.style.display = 'flex';
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('foodModalTitle').textContent = `Add ${targetProfile === 'boy' ? 'My' : 'Partner\'s'} Food Item`;
+            document.getElementById('food-form').reset();
+            gsap.from('.modal-content', { scale: 0.8, opacity: 0, duration: 0.5 });
+        }
+
+        function closeFoodModal() {
+            const modal = document.getElementById('food-modal');
+            if (modal) {
+                gsap.to(modal, { opacity: 0, duration: 0.3, onComplete: () => modal.style.display = 'none' });
+            }
+        }
+
+        document.getElementById('food-form')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!currentUserData) {
+                showErrorAlert("Please log in again.");
+                return;
+            }
+
+            const food = {
+                name: document.getElementById('food-name').value.trim(),
+                quantity: parseFloat(document.getElementById('quantity').value) || 1,
+                calories: parseInt(document.getElementById('calories').value) || 0,
+                carbs: parseFloat(document.getElementById('carbs').value) || 0,
+                protein: parseFloat(document.getElementById('protein').value) || 0,
+                fat: parseFloat(document.getElementById('fat').value) || 0,
+                fiber: parseFloat(document.getElementById('fiber').value) || 0,
+                water: parseInt(document.getElementById('water').value) || 0,
+                timestamp: new Date().toISOString()
+            };
+
+            if (!food.name || food.quantity <= 0) {
+                safeSetText('error-message', 'Please enter a valid food name and quantity > 0.');
+                document.getElementById('error-message').style.display = 'block';
+                return;
+            }
+
+            try {
+                if (foodModalTargetProfile === 'boy') {
+                    currentUserData.foodLog = currentUserData.foodLog || [];
+                    currentUserData.foodLog.push(food);
+                } else {
+                    currentUserData.partner = currentUserData.partner || createDefaultPartnerData();
+                    currentUserData.partner.foodLog = currentUserData.partner.foodLog || [];
+                    currentUserData.partner.foodLog.push(food);
+                }
+
+                if (saveCurrentUser(currentUserData)) {
+                    populateAllProfileData(currentUserData);
+                    closeFoodModal();
+                    showSuccessAlert(`Food added to ${foodModalTargetProfile === 'boy' ? 'your' : 'partner\'s'} log.`);
+                } else {
+                    showErrorAlert('Failed to save food log update.');
+                }
+            } catch (error) {
+                console.error("Error adding food item:", error);
+                showErrorAlert('An error occurred while adding the food item.');
+            }
+        });
+
+        function deleteFoodItem(profileType, indexToDelete) {
+            if (!currentUserData) return;
+
+            let targetLog = profileType === 'boy' ? currentUserData.foodLog : currentUserData.partner.foodLog;
+            let logName = profileType === 'boy' ? "your" : "partner's";
+
+            if (!Array.isArray(targetLog) || indexToDelete < 0 || indexToDelete >= targetLog.length) {
+                showErrorAlert(`Invalid item index provided.`);
+                return;
+            }
+
+            const foodNameToDelete = targetLog[indexToDelete]?.name || 'this item';
+
+            Swal.fire({
+                title: `Delete from ${logName} log?`,
+                text: `Remove "${foodNameToDelete}"?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    targetLog.splice(indexToDelete, 1);
+                    if (saveCurrentUser(currentUserData)) {
+                        populateAllProfileData(currentUserData);
+                        showSuccessAlert('Food item removed.');
+                    } else {
+                        showErrorAlert('Failed to save deletion.');
+                    }
+                }
+            });
+        }
+
+        function showSuccessAlert(message) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: message,
+                timer: 1800,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+        }
+
+        function showErrorAlert(message) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: message,
+                confirmButtonColor: 'var(--red)'
+            });
+        }
+
+        function confirmLogout() {
+            Swal.fire({
+                title: 'Logout Confirmation',
+                text: "Are you sure you want to log out?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, log out'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    logoutUser();
+                    Swal.fire({
+                        title: 'Logged Out!',
+                        text: 'You have been logged out successfully.',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.href = 'login.html';
+                    });
+                }
+            });
+        }
+
+        // Page Load Execution
+        document.addEventListener('DOMContentLoaded', () => {
+            const authModalOverlay = document.getElementById('authModalOverlay');
+            const pageWrapper = document.getElementById('pageWrapper');
+
+            function showAuthModal() {
+                if (!authModalOverlay) return;
+                authModalOverlay.style.display = 'flex';
+                gsap.to(authModalOverlay, { opacity: 1, duration: 0.3 });
+                if (pageWrapper) gsap.to(pageWrapper, { filter: "blur(5px)", duration: 0.3, pointerEvents: 'none' });
+                document.body.style.overflow = 'hidden';
+            }
+
+            function hideAuthModal() {
+                if (!authModalOverlay) return;
+                gsap.to(authModalOverlay, { opacity: 0, duration: 0.3, onComplete: () => authModalOverlay.style.display = 'none' });
+                if (pageWrapper) gsap.to(pageWrapper, { filter: "blur(0px)", duration: 0.3, pointerEvents: 'auto' });
+                document.body.style.overflow = '';
+            }
+
+            if (!isUserLoggedIn()) {
+                window.location.href = `login.html?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+            } else {
+                hideAuthModal();
+                pageWrapper.style.display = 'block';
+                const user = getCurrentUser();
+                if (user) {
+                    updateHeaderAuthState('authActionsContainerProfile', 'userInfoContainerProfile');
+                    const logoutBtn = document.querySelector('.logout-btn');
+                    if (logoutBtn) {
+                        logoutBtn.onclick = confirmLogout;
+                    }
+                    populateAllProfileData(user);
+                    switchProfileTab(currentActiveProfile, false);
+
+                    // Auto-update metrics every minute
+                    setInterval(() => {
+                        if (isUserLoggedIn()) {
+                            populateAllProfileData(getCurrentUser());
+                        }
+                    }, 60000);
+                } else {
+                    logoutUser();
+                }
+            }
+
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": { "value": 150, "density": { "enable": true, "value_area": 800 } },
+                        "color": { "value": ['#FFD700', '#FF69B4', '#1E90FF'] },
+                        "shape": { "type": "circle" },
+                        "opacity": { "value": 0.7, "random": true },
+                        "size": { "value": 5, "random": true },
+                        "line_linked": { "enable": false },
+                        "move": { "enable": true, "speed": 4, "direction": "none", "random": true }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } },
+                        "modes": { "repulse": { "distance": 120, "duration": 0.5 }, "push": { "particles_nb": 5 } }
+                    },
+                    "retina_detect": true
+                });
+            }
+
+            gsap.from('.profile-switcher', { opacity: 0, y: -50, duration: 1 });
+            gsap.from('.profile-content.active', { opacity: 0, y: 50, duration: 1, delay: 0.5 });
+            gsap.from('.profile-details img', { scale: 0, duration: 1, delay: 1 });
+            gsap.from('.metric-card', { opacity: 0, y: 30, stagger: 0.2, duration: 0.5, delay: 1.5 });
+            gsap.from('.recommendations li', { opacity: 0, x: -30, stagger: 0.2, duration: 0.5, delay: 2 });
+            gsap.from('.food-table tr', { opacity: 0, y: 20, stagger: 0.1, duration: 0.5, delay: 2.5 });
+            gsap.from('.plan-card', { opacity: 0, y: 30, stagger: 0.2, duration: 0.5, delay: 3 });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const foodModal = document.getElementById('food-modal');
+                    if (foodModal?.style.display === 'flex') closeFoodModal();
+                    if (girlProfileDiv?.classList.contains('edit-mode')) togglePartnerEditMode(false);
+                }
+            });
+        });
+
+        window.openFoodModal = openFoodModal;
+        window.closeFoodModal = closeFoodModal;
+        window.togglePartnerEditMode = togglePartnerEditMode;
+        window.savePartnerInfo = savePartnerInfo;
+        window.deleteFoodItem = deleteFoodItem;
+    </script>
+</body>
+</html>
