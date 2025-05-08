@@ -10,212 +10,341 @@
         :root {
             --yellow: #FFD700;
             --purple: #800080;
-            --orange: #FFA500;
             --black: #000000;
             --white: #FFFFFF;
-            --gray: #808080;
-            --light-gray: #D3D3D3;
             --green: #4CAF50;
+            --gray: #808080;
+            --light-gray: #f4f4f4;
             --red: #FF0000;
-            --blue: #0000FF;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: all 0.3s ease-in-out;
         }
         body {
             font-family: Arial, sans-serif;
-            background: url('https://via.placeholder.com/1920x1080') center/cover fixed;
+            background: url('https://cdn.pixabay.com/video/2024/05/08/211185_large.mp4') center/cover fixed;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             color: var(--black);
+            padding: 20px 0; /* Added padding for scroll */
         }
         .signup-container {
-            background-color: var(--white);
-            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px 40px; /* Adjusted padding */
             border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            width: 600px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 90%; /* Responsive width */
+            max-width: 650px; /* Max width */
             max-height: 90vh;
-            overflow-y: auto;
-            transform-style: preserve-3d;
-            perspective: 1000px;
+            overflow-y: auto; /* Enable scroll for content overflow */
+        }
+        .logo-container {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-container img {
+            width: 45px;
+            height: 45px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+        .logo-container h1 {
+            font-size: 2em; /* Adjusted size */
+            color: var(--purple);
+            font-weight: bold;
         }
         .signup-container h2 {
             color: var(--purple);
-            font-size: 2.5em;
-            margin-bottom: 30px;
+            font-size: 2.2em; /* Adjusted size */
+            margin-bottom: 25px;
             text-align: center;
         }
         form {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px; /* Adjusted gap */
+        }
+        .input-group {
+            position: relative;
+        }
+        .input-group label {
+             display: block;
+             margin-bottom: 6px;
+             font-weight: bold;
+             font-size: 0.95em; /* Adjusted size */
         }
         input, select {
-            padding: 12px;
+            width: 100%;
+            padding: 12px; /* Adjusted padding */
             border: 1px solid var(--gray);
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 1em;
+            box-sizing: border-box;
         }
         input[type="file"] {
-            padding: 5px;
+            padding: 10px; /* Specific padding for file input */
         }
-        button {
+        input:focus, select:focus {
+            border-color: var(--green);
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+        button[type="submit"] {
             background-color: var(--green);
             color: var(--white);
-            padding: 12px;
+            padding: 14px; /* Adjusted padding */
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1.2em;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
-        button:hover {
+        button[type="submit"]:hover {
             background-color: var(--yellow);
             color: var(--black);
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
         .back-to-login {
             text-align: center;
             margin-top: 20px;
-            color: var(--blue);
+            color: var(--purple);
             cursor: pointer;
+            font-size: 0.9em;
         }
         .back-to-login:hover {
-            color: var(--purple);
             text-decoration: underline;
         }
         .error-message {
             color: var(--red);
-            font-size: 1em;
+            font-size: 0.9em;
             text-align: center;
             display: none;
-            margin-top: 20px;
+            margin-top: 15px;
+            padding: 8px;
+            background-color: rgba(255,0,0,0.1);
+            border-radius: 5px;
         }
-        @media (max-width: 768px) {
-            .signup-container {
-                width: 90%;
-                padding: 20px;
-            }
+        /* Styling for Font Awesome Icons in Placeholders */
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 1.1em; /* Icon size */
         }
+         .input-group input {
+            padding-left: 40px; /* Make space for icon */
+        }
+        .input-group select { /* Select might not support icons this way, but for consistency */
+             padding-left: 10px;
+        }
+
+        /* Password strength indicator (basic) */
+        .password-strength {
+            font-size: 0.8em;
+            margin-top: 5px;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            background: var(--red);
+            transition: width 0.3s, background-color 0.3s;
+        }
+
     </style>
 </head>
 <body>
     <div class="signup-container">
-        <h2>Register with NutriFood</h2>
+        <div class="logo-container">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=45&q=80" alt="NutriFood Logo">
+            <h1>NutriFood</h1>
+        </div>
+        <h2>Create Your NutriFood Account</h2>
         <form id="signupForm">
-            <input type="text" id="firstName" placeholder="First Name" required>
-            <input type="text" id="lastName" placeholder="Last Name" required>
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="tel" id="phone" placeholder="Phone Number" required>
-            <input type="date" id="dob" placeholder="Date of Birth" required>
-            <select id="gender" required>
-                <option value="" disabled selected>Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-            </select>
-            <input type="text" id="address" placeholder="Address" required>
-            <select id="dietaryPreference" required>
-                <option value="" disabled selected>Dietary Preference</option>
-                <option value="vegetarian">Vegetarian</option>
-                <option value="vegan">Vegan</option>
-                <option value="gluten-free">Gluten-Free</option>
-                <option value="non-vegetarian">Non-Vegetarian</option>
-            </select>
-            <select id="fitnessGoal" required>
-                <option value="" disabled selected>Fitness Goal</option>
-                <option value="weight-loss">Weight Loss</option>
-                <option value="muscle-gain">Muscle Gain</option>
-                <option value="maintenance">Maintenance</option>
-            </select>
-            <input type="file" id="profilePic" accept="image/*" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
-            <button type="submit">Register</button>
+            <div class="input-group">
+                <label for="firstName"><i class="fas fa-user"></i> First Name</label>
+                <input type="text" id="firstName" placeholder="Enter your first name" required>
+            </div>
+            <div class="input-group">
+                <label for="lastName"><i class="fas fa-user"></i> Last Name</label>
+                <input type="text" id="lastName" placeholder="Enter your last name" required>
+            </div>
+            <div class="input-group">
+                <label for="username"><i class="fas fa-at"></i> Username</label>
+                <input type="text" id="username" placeholder="Choose a username" required>
+            </div>
+            <div class="input-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="email" placeholder="Enter your email address" required>
+            </div>
+            <div class="input-group">
+                <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required>
+            </div>
+            <div class="input-group">
+                <label for="dob"><i class="fas fa-calendar-alt"></i> Date of Birth</label>
+                <input type="date" id="dob" required>
+            </div>
+            <div class="input-group">
+                <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+                <select id="gender" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="prefer_not_to_say">Prefer not to say</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="address"><i class="fas fa-map-marker-alt"></i> Address</label>
+                <input type="text" id="address" placeholder="Enter your address" required>
+            </div>
+            <div class="input-group">
+                <label for="dietaryPreference"><i class="fas fa-leaf"></i> Dietary Preference</label>
+                <select id="dietaryPreference" required>
+                    <option value="" disabled selected>Select Dietary Preference</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="gluten-free">Gluten-Free</option>
+                    <option value="keto">Keto</option>
+                    <option value="paleo">Paleo</option>
+                    <option value="non-vegetarian">Non-Vegetarian</option>
+                    <option value="anything">Anything</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="fitnessGoal"><i class="fas fa-bullseye"></i> Fitness Goal</label>
+                <select id="fitnessGoal" required>
+                    <option value="" disabled selected>Select Fitness Goal</option>
+                    <option value="weight-loss">Weight Loss</option>
+                    <option value="muscle-gain">Muscle Gain</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="improve-health">Improve Overall Health</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="profilePic"><i class="fas fa-camera"></i> Profile Picture</label>
+                <input type="file" id="profilePic" accept="image/*">
+            </div>
+            <div class="input-group">
+                <label for="password"><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="password" placeholder="Create a strong password" required>
+                <div class="password-strength"><div class="strength-bar" id="strengthBar"></div></div>
+                 <small>Password must be at least 8 characters, include upper, lower, number, and special character.</small>
+            </div>
+            <div class="input-group">
+                <label for="confirmPassword"><i class="fas fa-lock"></i> Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+            </div>
+            <button type="submit">Register <i class="fas fa-user-plus"></i></button>
         </form>
-        <div class="back-to-login" onclick="window.location.href='index.html'">Already have an account? Login</div>
         <div id="signupError" class="error-message"></div>
+        <div class="back-to-login" onclick="window.location.href='login.html'">Already have an account? Login</div>
     </div>
 
+    <script src="auth.js"></script>
     <script>
-        // Form Submission with Profile Picture
-        document.getElementById('signupForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const username = document.getElementById('username').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const dob = document.getElementById('dob').value;
-            const gender = document.getElementById('gender').value;
-            const address = document.getElementById('address').value.trim();
-            const dietaryPreference = document.getElementById('dietaryPreference').value;
-            const fitnessGoal = document.getElementById('fitnessGoal').value;
-            const profilePicInput = document.getElementById('profilePic');
+        gsap.from(".signup-container", { opacity: 0, scale: 0.9, duration: 0.8, ease: "power2.out" });
+        gsap.from("form .input-group, form button[type='submit']", { opacity: 0, y: 20, duration: 0.5, stagger: 0.05, delay:0.3, ease: "power1.out" });
+
+        const passwordInput = document.getElementById('password');
+        const strengthBar = document.getElementById('strengthBar');
+        const signupError = document.getElementById('signupError');
+
+        passwordInput.addEventListener('input', function() {
+            const password = passwordInput.value;
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/)) strength++;
+            if (password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+            strengthBar.style.width = (strength * 20) + '%';
+            if (strength <= 2) strengthBar.style.backgroundColor = 'var(--red)';
+            else if (strength <= 4) strengthBar.style.backgroundColor = 'var(--yellow)';
+            else strengthBar.style.backgroundColor = 'var(--green)';
+        });
+
+
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            signupError.style.display = 'none'; // Clear previous errors
+
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-            const errorDiv = document.getElementById('signupError');
-            let users = JSON.parse(localStorage.getItem('users') || '[]');
 
             if (password !== confirmPassword) {
-                errorDiv.textContent = 'Passwords do not match';
-                errorDiv.style.display = 'block';
-                gsap.from('#signupError', { opacity: 0, duration: 0.5 });
-                return;
-            }
-            if (users.some(u => u.username === username)) {
-                errorDiv.textContent = 'Username already exists';
-                errorDiv.style.display = 'block';
-                gsap.from('#signupError', { opacity: 0, duration: 0.5 });
-                return;
-            }
-            if (users.some(u => u.email === email)) {
-                errorDiv.textContent = 'Email already registered';
-                errorDiv.style.display = 'block';
-                gsap.from('#signupError', { opacity: 0, duration: 0.5 });
+                signupError.textContent = 'Passwords do not match!';
+                signupError.style.display = 'block';
+                gsap.fromTo("#signupError", {opacity:0, y:-10}, {opacity:1, y:0, duration:0.5});
                 return;
             }
 
-            if (profilePicInput.files && profilePicInput.files[0]) {
+            // Validate password strength (example)
+            const strengthRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!strengthRegex.test(password)) {
+                signupError.textContent = 'Password is not strong enough. (Min 8 chars, 1 upper, 1 lower, 1 num, 1 special)';
+                signupError.style.display = 'block';
+                gsap.fromTo("#signupError", {opacity:0, y:-10}, {opacity:1, y:0, duration:0.5});
+                return;
+            }
+
+
+            const userData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                dob: document.getElementById('dob').value,
+                gender: document.getElementById('gender').value,
+                address: document.getElementById('address').value,
+                dietaryPreference: document.getElementById('dietaryPreference').value,
+                fitnessGoal: document.getElementById('fitnessGoal').value,
+                password: password,
+                // profilePic: Handle file upload separately if needed, or store as Base64
+            };
+
+            const profilePicFile = document.getElementById('profilePic').files[0];
+            if (profilePicFile) {
                 const reader = new FileReader();
-                reader.onload = function(event) {
-                    const profilePic = event.target.result;
-                    const newUser = {
-                        firstName,
-                        lastName,
-                        username,
-                        email,
-                        phone,
-                        dob,
-                        gender,
-                        address,
-                        dietaryPreference,
-                        fitnessGoal,
-                        profilePic,
-                        password
-                    };
-                    users.push(newUser);
-                    localStorage.setItem('users', JSON.stringify(users));
-                    alert('Registration successful! Redirecting to login...');
-                    window.location.href = 'index.html';
-                };
-                reader.readAsDataURL(profilePicInput.files[0]);
+                reader.onloadend = function() {
+                    userData.profilePic = reader.result; // Base64 string
+                    attemptRegistration(userData);
+                }
+                reader.readAsDataURL(profilePicFile);
             } else {
-                errorDiv.textContent = 'Please upload a profile picture';
-                errorDiv.style.display = 'block';
-                gsap.from('#signupError', { opacity: 0, duration: 0.5 });
+                userData.profilePic = 'https://via.placeholder.com/100'; // Default placeholder
+                attemptRegistration(userData);
             }
         });
 
-        // GSAP Animations
-        gsap.from('.signup-container', { opacity: 0, y: 100, duration: 1 });
-        gsap.from('form input, form select, form button', { opacity: 0, y: 20, duration: 0.8, stagger: 0.1 });
+        function attemptRegistration(userData) {
+            const registrationResult = registerUser(userData);
+            if (registrationResult.success) {
+                gsap.to(".signup-container", {
+                    opacity:0,
+                    scale:0.9,
+                    duration:0.5,
+                    onComplete: () => {
+                        alert('Registration successful! Please login.');
+                        window.location.href = 'login.html';
+                    }
+                });
+
+            } else {
+                signupError.textContent = registrationResult.message;
+                signupError.style.display = 'block';
+                gsap.fromTo("#signupError", {opacity:0, y:-10}, {opacity:1, y:0, duration:0.5});
+            }
+        }
     </script>
 </body>
 </html>
